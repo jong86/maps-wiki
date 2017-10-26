@@ -6,9 +6,19 @@ exports.seed = function(knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('types').insert({
+          id: 0,
+          icon: 'food.png',
+          type: 'food'
+        }),
+        knex('types').insert({
           id: 1,
-          icon: 'pin',
-          type: 'pin'
+          icon: 'cafe.png',
+          type: 'Coffee Shop'
+        }),
+        knex('types').insert({
+          id: 2,
+          icon: 'bar.png',
+          type: 'Bar'
         })
       ]);
     });

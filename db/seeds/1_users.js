@@ -6,28 +6,28 @@ exports.seed = function (knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('users').insert({
-          id: 1,
+          id: 0,
           first: 'Shawn',
           last: 'Griffin',
           email: 'shawn@shawngriffin.com',
           password: 'shawn'
         }),
         knex('users').insert({
-          id: 2,
+          id: 1,
           first: 'Finn',
           last: 'hitlner',
           email: 'finn.hiltner@hotmail.com',
           password: 'finn'
         }),
         knex('users').insert({
-          id: 3,
+          id: 2,
           first: 'Kelvin',
           last: 'Wong',
           email: 'kelvin8wong@gmail.com',
           password: 'kelvin'
         }),
         knex('users').insert({
-          id: 4,
+          id: 3,
           first: 'Jon',
           last: 'Gaspar',
           email: 'jon_gaspar@hotmail.com',

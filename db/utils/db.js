@@ -1,4 +1,12 @@
 module.exports = {
+
+  /**
+  * Get Maps
+  * @function getMaps
+  * @param {function} callback 
+  * @returns {object} maps = arry of maps
+  */
+
   getMaps: function (callback) {
     const err = null;
     const maps = [
@@ -105,6 +113,48 @@ module.exports = {
   deleteMapById: function (map_id, callback) {
     const err = null;
     callback(err);
+  },
+
+  /**
+  * Get Users
+  * @function getUsers
+  * @param {function} callback 
+  * @returns {object} Users = arry of Users
+  */
+
+  getUsers: function (callback) {
+    const err = null;
+    const users = [
+      {
+        id: 0,
+        first: 'Shawn',
+        last: 'Griffin',
+        email: 'shawn@shawngriffin.com',
+        password: 'shawn'
+      },
+      {
+        id: 1,
+        first: 'Finn',
+        last: 'hitlner',
+        email: 'finn.hiltner@hotmail.com',
+        password: 'finn'
+      },
+      {
+        id: 2,
+        first: 'Kelvin',
+        last: 'Wong',
+        email: 'kelvin8wong@gmail.com',
+        password: 'kelvin'
+      },
+      {
+        id: 3,
+        first: 'Jon',
+        last: 'Gaspar',
+        email: 'jon_gaspar@hotmail.com',
+        password: 'jon'
+      }
+    ];
+    callback(users, err);
   }
 
 };
