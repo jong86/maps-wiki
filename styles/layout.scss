@@ -1,17 +1,11 @@
 $font-stack:    Helvetica, sans-serif;
-$primary-color: grey;
+$primary-color: white;
 
 html, body {
   font: $font-stack;
   height: 100%;
   margin: 0;
   padding: 0;
-  color: $primary-color
-}
-
-#header {
-  width: 100%;
-  z-index: 5
 }
 
 // Navigation
@@ -45,6 +39,10 @@ img {
 
 // --Topbar
 
+.navbar-default {
+  opacity: 0.9;
+  filter: alpha(opacity=50)
+}
 .navbar-top-links {
     margin-right: 0;
 }
