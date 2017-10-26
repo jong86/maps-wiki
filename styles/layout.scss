@@ -1,3 +1,9 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #EEE;
 
@@ -6,16 +12,10 @@ body {
   }
 }
 
-
 #header {
   background-color: #6476ff;
 }
 
 #sidebar {
   background-color: #bdff95a1;
-}
-
-#map {
-  height: 100%;
-  width: 100%
 }
