@@ -2,9 +2,8 @@
 
 const express = require('express');
 const mapRoutes = express.Router();
-const db = require('../db/utils/db');
 
-module.exports = function () {
+module.exports = function (db) {
   mapRoutes.get('/', function (req, res) {
     db.getMaps(function (maps, err) {
       if (err) {

@@ -1,4 +1,5 @@
-module.exports = {
+
+module.exports = (knex) => ({
 
   /**
   * Get Maps
@@ -157,4 +158,4 @@ module.exports = {
     callback(users, err);
   }
 
-};
+});

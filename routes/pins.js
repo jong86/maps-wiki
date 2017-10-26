@@ -3,7 +3,7 @@
 const express = require('express');
 const pinRoutes = express.Router();
 
-module.exports = function () {
+module.exports = function (db) {
 
   pinRoutes.get('/:id', function (req, res) {
     const pin = {

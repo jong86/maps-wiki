@@ -41,9 +41,10 @@ app.use(
 app.use(express.static('public'));
 
 // Mount all resource routes
-app.use('/users', usersRoutes(knex));
-app.use('/maps', mapRoutes());
-app.use('/pins', pinRoutes());
+const db = require('./db/utils/db.js')(knex);
+app.use('/users', usersRoutes(db));
+app.use('/maps', mapRoutes(db));
+app.use('/pins', pinRoutes(db));
 
 // Home page
 app.get('/', (req, res) => {
