@@ -47,6 +47,8 @@ img {
 }
 .navbar-top-links {
     margin-right: 0;
+    float:left;
+    margin-top:17px
 }
 
 .navbar-top-links li {
@@ -82,7 +84,10 @@ img {
   margin-bottom: 15px;
   padding: 0px 20px;
 }
-
+.dropdown-menu {
+  z-index: 100000;
+  position: relative
+}
 
 
 //sidebar
