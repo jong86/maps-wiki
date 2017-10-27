@@ -22,7 +22,7 @@ function initMap() {
       
   
       
-      var currentMarkers = []; // Possibly to use for edit history
+      var currentMarkers = {}; // Possibly to use for edit history
   
       var mapPos; // For storing google map latitude and longitude
       var markerType;
@@ -127,22 +127,98 @@ function initMap() {
 
       // Handlebars template:
       var sourceInfoWindow = `
-      <div class="info-window">
-        <ul>
-          <li><img src="{{image}}" /></li>
-          <li>latitude: {{latitude}}</li>
-          <li>longitude: {{longitude}}</li>
-          <li>title: {{title}}</li>
-          <li>description: {{description}}</li>
-          <li>url: <a href="{{url}}">{{url}}</a></li>
-          <li>user_id: {{user_id}}</li>
-          <li>type_id: {{type_id}}</li>
-          <li>map_id: {{map_id}}</li>
-          <li>created_at: {{created_at}}</li>
-          <li>version: {{version}}</li>
-        </ul>
+      <div class="info-window" data-pin_id="{{id}}">
+        <div class="info-window-display">
+          <ul>
+            <li><img src="{{image}}" /></li>
+            <li>latitude: {{latitude}}</li>
+            <li>longitude: {{longitude}}</li>
+            <li>title: {{title}}</li>
+            <li>description: {{description}}</li>
+            <li>url: <a href="{{url}}">{{url}}</a></li>
+            <li>user_id: {{user_id}}</li>
+            <li>type_id: {{type_id}}</li>
+            <li>map_id: {{map_id}}</li>
+            <li>created_at: {{created_at}}</li>
+            <li>version: {{version}}</li>
+            <li>
+              <button class="edit">edit</button>
+              <button class="delete">delete</button>
+            </li>
+          </ul>
+        </div>
+        <div class="info-window-edit">
+          <form class="edit-marker-form">
+            <table class="table">
+              <tr>
+                <td class="label">
+                  <label for="title" class="noselect">Title:</label>
+                </td>
+                <td class="input">
+                  <input class="input-field" class="title" type="text" name="title" /><br />
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <label for="description" class="noselect">Description:</label>
+                </td>
+                <td class="input">
+                  <input class="input-field" class="description" type="text" name="description" /><br />
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <label for="image" class="noselect">Image:</label>
+                </td>
+                <td class="input">
+                  <input class="input-field" class="image" type="text" name="image" /><br />
+                </td>
+              </tr>
+              <tr>
+                <td class="label">
+                  <label for="url" class="noselect">URL:</label>
+                </td>
+                <td class="input">
+                  <input class="input-field" class="url" type="text" name="url" /><br />
+                </td>
+              </tr>
+            </table>
+            <input class="save" type="submit" value="save">
+            <button class="cancel">cancel</button>
+          </form>
+        </div>
       </div>
       `;
+
+      $(document).on("click", ".info-window .edit", function(event) {
+        event.preventDefault();
+        console.log($(this).closest(".info-window-edit"));
+        $(this).parent().parent().parent().css("display", "none");
+        $(this).parent().parent().parent().next().css("display", "inline");
+      });
+      
+      $(document).on("click", ".info-window .cancel", function(event) {
+        event.preventDefault();
+        $(this).parent().parent().css("display", "none");
+        $(this).parent().parent().prev().css("display", "inline");
+      });
+      
+      $(document).on("click", ".info-window .save", function(event) { // For updating pin values
+        event.preventDefault();
+        var pin_id = $(this).parent().parent().parent().data("pin_id");
+        $.ajax({
+          method:"PUT",
+          url: `pins/${pin_id}`
+        }).then(function(results) {
+
+        });
+
+      });
+      
+      $(document).on("click", ".info-window .delete", function(event) {
+        event.preventDefault();
+
+      });
       
       function createMarker(data) { // Gets called after submitting new marker form...
         var compiledInfoWindowTemplate = Handlebars.compile(sourceInfoWindow);
@@ -166,7 +242,7 @@ function initMap() {
         marker.addListener("click", function() { // Right to delete marker
           infoWindow.open(map, marker);
         });
-        currentMarkers.push(marker);
+        currentMarkers[];
       }
   
    
