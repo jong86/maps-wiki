@@ -10,8 +10,9 @@ function initMap() {
   
     
       var mapOptions = {
-        zoom: 6,
-        center: new google.maps.LatLng(49.2827, 123.1207)
+        zoom: 15,
+        center: new google.maps.LatLng(49.2827, -123.1207),
+        // disableDefaultUI: true,
       };
       
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -21,16 +22,15 @@ function initMap() {
       
   
       
-      var currentMarkers = [];
+      var currentMarkers = []; // Possibly to use for edit history
   
-      var pos;
+      var mapPos; // For storing google map latitude and longitude
       var markerType;
       var crosshair = document.getElementById("crosshair");
       var cm = document.getElementById("context-menu");
       var newMarkerMenu = document.getElementById("new-marker-menu");
-      map.addListener("rightclick", function(event) {
-        pos = event.latLng;
-        console.log(pos);
+      map.addListener("rightclick", function(event) { // Right-click context menu to create new marker
+        mapPos = event.latLng;
         $(cm).css("left", event.pixel.x + "px");
         $(cm).css("top", event.pixel.y + $("#map").offset().top + "px");
         $(cm).css("display", "inline");
@@ -39,15 +39,13 @@ function initMap() {
         $(crosshair).css("display", "inline");
       });
       
-      $("body").on("click", function() { // hides menus when anywhere else on body is clicked
+      $("body").on("click", function() { // Hides menus when anywhere on body is clicked
         $(cm).css("display", "none");
         $(crosshair).css("display", "none");
-  
       })
       
 
-      $(".marker-select-button").on("click", function(event) {
-        console.log(event);
+      $(".marker-select-button").on("click", function(event) { // When marker type selected
         $(newMarkerMenu).css("left", $(cm).offset().left - ($(newMarkerMenu).width() / 2));
         $(newMarkerMenu).css("top", $(cm).offset().top - ($(newMarkerMenu).height()));
         $(newMarkerMenu).css("display", "inline");
@@ -56,73 +54,111 @@ function initMap() {
         markerType = $(this).data().markertype;
       })
       
+
+      var QueryStringToHash = function QueryStringToHash (query) { // Turns serialized data into object
+        var query_string = {};
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+          var pair = vars[i].split("=");
+          pair[0] = decodeURIComponent(pair[0]);
+          pair[1] = decodeURIComponent(pair[1]);
+              // If first entry with this name
+          if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = pair[1];
+              // If second entry with this name
+          } else if (typeof query_string[pair[0]] === "string") {
+            var arr = [ query_string[pair[0]], pair[1] ];
+            query_string[pair[0]] = arr;
+              // If third or later entry with this name
+          } else {
+            query_string[pair[0]].push(pair[1]);
+          }
+        } 
+        return query_string;
+      };
       
       $("#new-marker-form").on("submit", function(event) { // Submits new marker form
         event.preventDefault();
         $(newMarkerMenu).css("display", "none");
+        var markerTypeList = {
+          food: 0,
+          cafe: 1,
+          bar: 2,
+          view: 3,
+          misc: 4
+        }
         var extraData = {
-          latitude: pos.lat,
-          longitude: pos.lng,
-          type: markerType
+          latitude: mapPos.lat,
+          longitude: mapPos.lng,
+          type_id: Number(markerTypeList[markerType]),
+          map_id: 0
         };
         var data = $(this).serialize() + "&" + $.param(extraData);
+        console.log("I send: ", data);
         $("#new-marker-menu form").trigger("reset");
         $.ajax({
           method: "POST",
           url: "/pins",
           data: data
         }).done(function(results) {
-          console.log("results:", results);
+          var newMarkerObj = QueryStringToHash(data); 
+          newMarkerObj.id = results[0]; 
+          // console.log(newMarkerObj);
+          createMarker(newMarkerObj);
           $(crosshair).css("display", "none");
-          createMarker(results);
         });
       })
       
-      $("#new-marker-menu #cancel").on("click", function(event) { // Submits new marker form
+
+      $("#new-marker-menu #cancel").on("click", function(event) { // Close new marker form
         event.preventDefault();
         $(newMarkerMenu).css("display", "none");
         $("#new-marker-menu form").trigger("reset");
-  
       })
   
-  
-      function randomBillMurray() {
+
+      
+      function randomBillMurray() { // Helper function to generate random images for now
         var rand = Math.floor(Math.random() * 100 + 200);
         var url = `http://www.fillmurray.com/${rand}/300`;
         return url;
       }
   
-  
+
+      // Handlebars template:
       var sourceInfoWindow = `
-      <ul>
-        <li>latitude: {{latitude}}</li>
-        <li>longitude: {{longitude}}</li>
-        <li>title: {{title}}</li>
-        <li>description: {{description}}</li>
-        <li>image: <img src="{{image}}" /></li>
-        <li>url: <a href="{{url}}">{{url}}</a></li>
-        <li>user_id: {{user_id}}</li>
-        <li>type_id: {{type_id}}</li>
-        <li>map_id: {{map_id}}</li>
-        <li>created_at: {{created_at}}</li>
-        <li>version: {{version}}</li>
-      </ul>`;
+      <div class="info-window">
+        <ul>
+          <li><img src="{{image}}" /></li>
+          <li>latitude: {{latitude}}</li>
+          <li>longitude: {{longitude}}</li>
+          <li>title: {{title}}</li>
+          <li>description: {{description}}</li>
+          <li>url: <a href="{{url}}">{{url}}</a></li>
+          <li>user_id: {{user_id}}</li>
+          <li>type_id: {{type_id}}</li>
+          <li>map_id: {{map_id}}</li>
+          <li>created_at: {{created_at}}</li>
+          <li>version: {{version}}</li>
+        </ul>
+      </div>
+      `;
       
       function createMarker(data) { // Gets called after submitting new marker form...
-        
         var compiledInfoWindowTemplate = Handlebars.compile(sourceInfoWindow);
         var contentString = compiledInfoWindowTemplate(data);
-  
         var infoWindow = new google.maps.InfoWindow({
           content: contentString
         });
-  
+        var iconPath = "icons/";
+        var types = ["food.png", "cafe.png", "bar.png", "view.png", "misc.png"];
         var marker = new google.maps.Marker({
           map: map,
-          position: new google.maps.LatLng(parseInt(data.latitude), parseInt(data.longitude)), // GPS coords
+          position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
           title: data.description,
           label: data.title,
-          draggable: true
+          draggable: true,
+          icon: iconPath + types[Number(data.type_id)]
         })
         marker.addListener("dblclick", function() { // Right to delete marker
           marker.setMap(null);
@@ -133,43 +169,23 @@ function initMap() {
         currentMarkers.push(marker);
       }
   
-  
-  
-  
-      function addAllMarkers(markers) {
-        for (var i = 0; i < markers.length; i++) {
-          createMarker(markers[i]);
-        }
-      }
-      
-  
-      function retrievePins() {
+   
+      var currentMap = 0;
+      function retrievePins() { // Gets the pins for the current map
         $.ajax({
-          method: "GET",
-          url: "/maps/0" // hard-coded 0 for now
-        }).done(function(results) {
-          if (results) {
-            var markers = [];
-            markers.push(results.id);
-          }
-          for (var i = 0; i < markers.length; i++) {
-            $.ajax({
-              method:"GET",
-              url: `/pins/${i}}`
-      
-            }).done(function(results) {
-              if (results) {
-                console.log("results from pins", results);
-                var markers = [results]; // temporarily makes an array for dev purposes
-                addAllMarkers(markers);
-              }
-            })
-          }
+          method:"GET",
+          url: `maps/${currentMap}/pins`
+        }).then(function(results) {
+          results.forEach(function(item) {
+            createMarker(item);
+          })
+        }).catch(function(error) {
+          console.log("Error loading pins.");
         });
       }
-      
       retrievePins();
-  
+
+
     });
   }
   
