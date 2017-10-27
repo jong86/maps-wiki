@@ -18,6 +18,8 @@ img {
 }
 #wrapper {
     width: 100%;
+    margin:0;
+    opacity: 0.9
 }
 
 // #page-wrapper {
@@ -75,6 +77,10 @@ img {
 
 .navbar-top-links .dropdown-menu li a div {
     white-space: normal;
+}
+.navbar-top-links .form-group {
+  margin-bottom: 15px;
+  padding: 0px 20px;
 }
 
 

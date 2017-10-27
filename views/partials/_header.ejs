@@ -1,25 +1,27 @@
-<div id="wrapper">
-        <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav id="wrapper" class="navbar navbar-defaults" role="navigation">
         <div class="navbar-header">
             <img src="https://openclipart.org/download/234349/flat_location_logo.svg" alt="wikimap">
             <button type="button" class="sidebar-toggle btn">Hide Menu</button>
         </div>
-                    <!-- /.navbar-header -->
-              
-             <ul class="nav navbar-top-links navbar-middle">
-                 <span class="">
+        <div>
+            <ul class="navbar-top-links navbar-middle">
+                <li>
                     <button class="btn btn-primary">Edit</button>
                     <button class="btn btn-primary">Create</button>
                     <button class="btn btn-primary">Delete</button>
-                </span>
-                <i class="fa fa-map-pin"></i> 
-                <i class="fa fa-map-pin"></i>
-                <i class="fa fa-map-pin"></i>
-                <i class="fa fa-map-pin"></i>
+                </li>
+                <li>
+                    <i class="fa fa-map-pin"></i> 
+                    <i class="fa fa-map-pin"></i>
+                    <i class="fa fa-map-pin"></i>
+                    <i class="fa fa-map-pin"></i>
+                </li>
             </ul>
-             <ul class="nav navbar-top-links navbar-right">
-            <li class="dropdown">
+            <ul class="navbar-top-links navbar-right">
+                <li>
+                    <button type="submit" id="logout-button" class="btn btn-primary btn-block">Log out</button>
+                </li>  
+                <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
@@ -36,7 +38,6 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" id="login-button" class="btn btn-primary btn-block">Log in</button>
-                                    <button type="submit" id="logout-button" class="btn btn-primary btn-block" style="display:none">Log out</button>
                                 </div>
                             </form>
                         </li>
@@ -45,4 +46,4 @@
             </li>
         </ul>
     </nav>
-</div>
+    
