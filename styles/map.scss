@@ -5,6 +5,7 @@
 }
 
 
+
 #crosshair {
   display: none;
   position: absolute;
@@ -35,10 +36,16 @@
         background-color: rgba(118, 255, 118, 0.822);
         cursor: copy;
       }
+
+      img {
+        width: 3em;
+      }
+
     }
   }
   
   #new-marker {
+    font-size: 1.4rem;
     border-bottom: 1px solid rgb(107, 107, 107);
     padding: .3rem;
     border-radius: 6px 6px 0 0;
@@ -54,21 +61,29 @@
   border: 1px solid black;
   border-radius: 6px;
   font-size: .8rem;
-
 }
 
 
 .info-window-display {
-
   li {
-    list-style-type: none
+    list-style-type: none;
   }
 }
 
 .info-window-edit {
+  display: none;
+  table {
+    border: 0;
+    td {
+      border: 0;
+      font-size: 1.2rem;
+      color: black;
+    }
+  }
 
-  display: none
-
+  li {
+    list-style-type: none;
+  }
 }
 
 .noselect {

@@ -78,16 +78,17 @@ function initMap() {
         return query_string;
       };
       
+      var markerTypeList = {
+        food: 0,
+        cafe: 1,
+        bar: 2,
+        view: 3,
+        misc: 4
+      }
+
       $("#new-marker-form").on("submit", function(event) { // Submits new marker form
         event.preventDefault();
         $(newMarkerMenu).css("display", "none");
-        var markerTypeList = {
-          food: 0,
-          cafe: 1,
-          bar: 2,
-          view: 3,
-          misc: 4
-        }
         var extraData = {
           latitude: mapPos.lat,
           longitude: mapPos.lng,
@@ -150,40 +151,24 @@ function initMap() {
         </div>
         <div class="info-window-edit">
           <form class="edit-marker-form">
-            <table class="table">
-              <tr>
-                <td class="label">
-                  <label for="title" class="noselect">Title:</label>
-                </td>
-                <td class="input">
-                  <input class="input-field" class="title" type="text" name="title" /><br />
-                </td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <label for="description" class="noselect">Description:</label>
-                </td>
-                <td class="input">
-                  <input class="input-field" class="description" type="text" name="description" /><br />
-                </td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <label for="image" class="noselect">Image:</label>
-                </td>
-                <td class="input">
-                  <input class="input-field" class="image" type="text" name="image" /><br />
-                </td>
-              </tr>
-              <tr>
-                <td class="label">
-                  <label for="url" class="noselect">URL:</label>
-                </td>
-                <td class="input">
-                  <input class="input-field" class="url" type="text" name="url" /><br />
-                </td>
-              </tr>
-            </table>
+            <ul>
+              <li>
+                <label for="title" class="noselect">Title:</label>
+                <input class="input-field" class="title" type="text" name="title" /><br />
+              </li>
+              <li>
+                <label for="description" class="noselect">Description:</label>
+                <input class="input-field" class="description" type="text" name="description" /><br />
+              </li>
+              <li>
+                <label for="image" class="noselect">Image:</label>
+                <input class="input-field" class="image" type="text" name="image" /><br />
+              </li>
+              <li>
+                <label for="url" class="noselect">URL:</label>
+                <input class="input-field" class="url" type="text" name="url" /><br />
+              </li>
+            </ul>
             <input class="save" type="submit" value="save">
             <button class="cancel">cancel</button>
           </form>
@@ -206,19 +191,33 @@ function initMap() {
       
       $(document).on("click", ".info-window .save", function(event) { // For updating pin values
         event.preventDefault();
+
         var pin_id = $(this).parent().parent().parent().data("pin_id");
+
+        var extraData = {
+          // latitude: mapPos.lat, // need to update for 'this'
+          // longitude: mapPos.lng, // need to update
+          // type_id: Number(markerTypeList[markerType]), // need to update
+          map_id: 0,
+          pin_id: pin_id
+        };
+        var data = $(this).parent().serialize() + "&" + $.param(extraData);
+        console.log("I send: ", data);
+
         $.ajax({
           method:"PUT",
-          url: `pins/${pin_id}`
+          url: `pins/${pin_id}`,
+          data: data
         }).then(function(results) {
-
+          console.log("Edit complete:", results);
+          $(this).parent().parent().css("display", "none");
+          $(this).parent().parent().prev().css("display", "inline");
         });
 
       });
       
       $(document).on("click", ".info-window .delete", function(event) {
         event.preventDefault();
-
       });
       
       function createMarker(data) { // Gets called after submitting new marker form...
@@ -243,7 +242,7 @@ function initMap() {
         marker.addListener("click", function() { // Right to delete marker
           infoWindow.open(map, marker);
         });
-        currentMarkers[];
+        currentMarkers[data.id] = marker;
       }
   
    
