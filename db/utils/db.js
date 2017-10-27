@@ -28,6 +28,23 @@ module.exports = knex => ({
         callback(rows, err);
       });
   },
+  /**
+  * DATABASE FUNCTION 
+  * getPinByPinId gets an individual pin independent of whatever map it's on
+  * @function getPinByPinId
+  * @param {integer} pin_id - integer indicating the pin to find. 
+  * @param {function} callback 
+  * @returns {object} rowd[0] -  a single pin 
+  */
+  getPinByPinId: function (pinId, callback) {
+    const err = null;
+
+    knex('pins')
+      .where('id', pinId)
+      .then(function (rows) {
+        callback(rows[0], err);
+      });
+  },
 
   getMapById: function (map_id, callback) {
     const err = null;
@@ -61,7 +78,6 @@ module.exports = knex => ({
   * @param {function} callback 
   * @returns {object} Users = array of Users
   */
-
   getUsers: function (callback) {
     const err = null;
     knex('users').then(function (users) {

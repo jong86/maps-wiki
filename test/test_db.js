@@ -41,6 +41,14 @@ for (let i = 0; i < 2; i++) {
     console.log('Individual pins[0]', pins[0]);
   });
 }
+db.getPinByPinId(0, function (pin, err) {
+  if (err) {
+    console.log(err);
+  }
+  console.log('getPinByPinId', 0, pin);
+  console.log('Individual pins[0]', pin);
+});
+
 db.getUsers(function (users, err) {
   if (err) {
     console.log(err);
