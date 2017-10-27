@@ -7,8 +7,8 @@ module.exports = function (db) {
   pinRoutes.get('/:id', function (req, res) {
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2819163',
+      longitude: '-123.1105114',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
@@ -24,15 +24,15 @@ module.exports = function (db) {
 
   pinRoutes.post('/', function (req, res) {
     //  creates new pin
-    //  dummy data
+    //  some dummy data
+    const newPin = req.body;
     const pin = {
-      id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
-      title: 'Official Vancouver Co-ordinates Cafe',
-      description: 'A good cafe with no beans',
-      image: 'http://www.fillmurray.com/200/300',
-      url: 'https://www.youtube.com/watch?v=IzVqkV_hQjc',
+      latitude: newPin.latitude,
+      longitude: newPin.longitude,
+      title: newPin.title,
+      description: newPin.description,
+      image: newPin.image,
+      url: newPin.url,
       user_id: 0,
       type_id: 0,
       map_id: 0,
@@ -44,6 +44,7 @@ module.exports = function (db) {
       if (err) {
         console.log(err);
       }
+      console.log('pinId: ', pinId);
       res.json(pinId);
     });
   });
