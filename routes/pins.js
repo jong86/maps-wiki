@@ -3,13 +3,12 @@
 const express = require('express');
 const pinRoutes = express.Router();
 
-module.exports = function () {
-
+module.exports = function (db) {
   pinRoutes.get('/:id', function (req, res) {
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2819163',
+      longitude: '-123.1105114',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
@@ -25,22 +24,29 @@ module.exports = function () {
 
   pinRoutes.post('/', function (req, res) {
     //  creates new pin
-    //  dummy data
+    //  some dummy data
+    const newPin = req.body;
     const pin = {
-      id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
-      title: 'Official Vancouver Co-ordinates Cafe',
-      description: 'A good cafe with no beans',
-      image: 'http://www.fillmurray.com/200/300',
-      url: 'https://www.youtube.com/watch?v=IzVqkV_hQjc',
+      latitude: newPin.latitude,
+      longitude: newPin.longitude,
+      title: newPin.title,
+      description: newPin.description,
+      image: newPin.image,
+      url: newPin.url,
       user_id: 0,
       type_id: 0,
       map_id: 0,
-      created_at: Date.now(),
-      version: Date.now()
+      created_at: '2017-10-24',
+      version: '2017-10-24'
     };
-    res.json(pin);
+    // TODO get jon to pass in mapid, and pin information. Construct pin object. 
+    db.createPinByMapId(0, pin, function (pinId, err) {
+      if (err) {
+        console.log(err);
+      }
+      console.log('pinId: ', pinId);
+      res.json(pinId);
+    });
   });
 
   pinRoutes.put('/:id', function (req, res) {
@@ -49,8 +55,8 @@ module.exports = function () {
     //  dummmyy data
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2827',
+      longitude: '-123.1207',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
