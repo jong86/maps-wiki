@@ -7,8 +7,8 @@ module.exports = function (db) {
   pinRoutes.get('/:id', function (req, res) {
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2827',
+      longitude: '-123.1207',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
@@ -27,8 +27,8 @@ module.exports = function (db) {
     //  dummy data
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2827',
+      longitude: '-123.1207',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
@@ -54,8 +54,8 @@ module.exports = function (db) {
     //  dummmyy data
     const pin = {
       id: 0,
-      latitude: '49.2827 N',
-      longitude: '123.1207 W',
+      latitude: '49.2827',
+      longitude: '-123.1207',
       title: 'Official Vancouver Co-ordinates Cafe',
       description: 'A good cafe with no beans',
       image: 'http://www.fillmurray.com/200/300',
