@@ -8,7 +8,10 @@
     "start": "node server.js",
     "local": "./node_modules/.bin/nodemon --ignore public/",
     "knex": "./node_modules/.bin/knex",
-    "jsdoc": "jsdoc db/utils/db.js -d docs"
+    "jsdoc": "jsdoc db/utils/db.js -d docs",
+    "seed": "./node_modules/.bin/knex seed:run",
+    "latest": "./node_modules/.bin/knex migrate:latest",
+    "rollback": "./node_modules/.bin/knex migrate:rollback"
   },
   "author": "Lighthouse Labs",
   "license": "ISC",
