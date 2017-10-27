@@ -23,7 +23,7 @@ db.getMaps(function (maps, err) {
   console.log('getMaps', maps);
 });
 
-for (let i = 0; i < 2; i++) {
+for (let i = 1; i < 2; i++) {
   db.getMapById(i, function (map, err) {
     if (err) {
       console.log(err);
@@ -32,7 +32,7 @@ for (let i = 0; i < 2; i++) {
   });
 }
 
-for (let i = 0; i < 2; i++) {
+for (let i = 1; i < 2; i++) {
   db.getPinsByMapId(i, function (pins, err) {
     if (err) {
       console.log(err);
@@ -41,7 +41,7 @@ for (let i = 0; i < 2; i++) {
     console.log('Individual pins[0]', pins[0]);
   });
 }
-db.getPinByPinId(0, function (pin, err) {
+db.getPinByPinId(1, function (pin, err) {
   if (err) {
     console.log(err);
   }
@@ -57,21 +57,18 @@ db.getUsers(function (users, err) {
 });
 
 const pin = {
-  // id: 0,
   latitude: '49.2827 N',
   longitude: '123.1207 W',
   title: 'Official Vancouver Co-ordinates Cafe',
   description: 'A good cafe with no beans',
   image: 'http://www.fillmurray.com/200/300',
   url: 'https://www.youtube.com/watch?v=IzVqkV_hQjc',
-  user_id: 0,
-  type_id: 0,
-  map_id: 0,
-  created_at: '2017-05-02',
-  version: '2017-05-02'
+  user_id: 1,
+  type_id: 1,
+  map_id: 1
 };
 
-db.createPinByMapId(0, pin, function (pin_id, err) {
+db.createPinByMapId(1, pin, function (pin_id, err) {
   if (err) {
     console.log(err);
   }

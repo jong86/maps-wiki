@@ -6,7 +6,6 @@ exports.seed = function(knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('pins').insert({
-          id: 0,
           latitude: '49.2830428',
           longitude: '-123.1104677',
           title: 'Woodwards',
@@ -14,13 +13,10 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
-          type_id: 0,
+           type_id: 0,
           map_id: 0
         }),
         knex('pins').insert({
-          id: 1,
           latitude: '49.3028',
           longitude: '-123.147',
           title: 'Bobby',
@@ -28,13 +24,10 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
-          type_id: 1,
+           type_id: 1,
           map_id: 1
         }),
         knex('pins').insert({
-          id: 2,
           latitude: '49.228',
           longitude: '-123.104677',
           title: 'Official Vancouver Co-ordinates Cafe',
@@ -42,8 +35,6 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
           type_id: 2,
           map_id: 1
         })
