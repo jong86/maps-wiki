@@ -13,9 +13,7 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
-          type_id: 0,
+           type_id: 0,
           map_id: 0
         }),
         knex('pins').insert({
@@ -26,9 +24,7 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
-          type_id: 1,
+           type_id: 1,
           map_id: 1
         }),
         knex('pins').insert({
@@ -39,8 +35,6 @@ exports.seed = function(knex, Promise) {
           image: 'https://en.wikipedia.org/wiki/File:Woodwards_W-43.jpg',
           url: 'https://youtu.be/OHDRcZ0XQPg',
           user_id: 1,
-          created_at: '2017-10-24',
-          version: '2017-10-24',
           type_id: 2,
           map_id: 1
         })
