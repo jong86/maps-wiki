@@ -4,7 +4,6 @@ const express = require('express');
 const pinRoutes = express.Router();
 
 module.exports = function (db) {
-
   pinRoutes.get('/:id', function (req, res) {
     const pin = {
       id: 0,
@@ -37,10 +36,16 @@ module.exports = function (db) {
       user_id: 0,
       type_id: 0,
       map_id: 0,
-      created_at: Date.now(),
-      version: Date.now()
+      created_at: '2017-10-24',
+      version: '2017-10-24'
     };
-    res.json(pin);
+    // TODO get jon to pass in mapid, and pin information. Construct pin object. 
+    db.createPinByMapId(0, pin, function (pinId, err) {
+      if (err) {
+        console.log(err);
+      }
+      res.json(pinId);
+    });
   });
 
   pinRoutes.put('/:id', function (req, res) {
