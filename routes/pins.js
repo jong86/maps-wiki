@@ -33,11 +33,9 @@ module.exports = function (db) {
       description: newPin.description,
       image: newPin.image,
       url: newPin.url,
-      user_id: 0,
-      type_id: 0,
-      map_id: 0,
-      created_at: '2017-10-24',
-      version: '2017-10-24'
+      user_id: req.session.user_id,
+      type_id: newPin.type_id,
+      map_id: newPin.map_id
     };
     // TODO get jon to pass in mapid, and pin information. Construct pin object. 
     db.createPinByMapId(0, pin, function (pinId, err) {
