@@ -191,9 +191,7 @@ function initMap() {
       
       $(document).on("click", ".info-window .save", function(event) { // For updating pin values
         event.preventDefault();
-
         var pin_id = $(this).parent().parent().parent().data("pin_id");
-
         var extraData = {
           // latitude: mapPos.lat, // need to update for 'this'
           // longitude: mapPos.lng, // need to update
@@ -203,7 +201,6 @@ function initMap() {
         };
         var data = $(this).parent().serialize() + "&" + $.param(extraData);
         console.log("I send: ", data);
-
         $.ajax({
           method:"PUT",
           url: `pins/${pin_id}`,
@@ -213,11 +210,18 @@ function initMap() {
           $(this).parent().parent().css("display", "none");
           $(this).parent().parent().prev().css("display", "inline");
         });
-
       });
       
       $(document).on("click", ".info-window .delete", function(event) {
         event.preventDefault();
+        var pin_id = $(this).parent().parent().parent().parent().data("pin_id");
+        $.ajax({
+          method:"DELETE",
+          url: `pins/${pin_id}`,
+        }).then(function(results){
+          console.log(results);
+          currentMarkers.pin_id.setMap(null);
+        })
       });
       
       function createMarker(data) { // Gets called after submitting new marker form...
