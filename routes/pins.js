@@ -24,7 +24,6 @@ module.exports = function (db) {
 
   pinRoutes.post('/', function (req, res) {
     //  creates new pin
-    //  dummy data
     //  some dummy data
     const newPin = req.body;
     const pin = {
