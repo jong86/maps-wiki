@@ -1,14 +1,13 @@
 #map {
   height: 100%;
   width: 100%
-  position
 }
 
 
 #crosshair {
   display: none;
   position: absolute;
-  z-index: 4;
+  z-index: 3;
 }
 
 #context-menu {
@@ -16,8 +15,13 @@
   // height: 0.9rem;
   display: none;
   position: absolute;
+<<<<<<< HEAD
   z-index: 5;
   padding: 0;
+=======
+  z-index: 2;
+  padding: 0.15rem;
+>>>>>>> 94c659b9d869b1af3cbc02c04a5c59c3be5a0e43
   background-color: rgba(127, 209, 182, 0.5);
   border: 1px solid black;
   border-radius: 6px;

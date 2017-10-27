@@ -32,7 +32,7 @@ app.use(knexLogger(knex));
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['put this in .env'],
+  keys: ['put this in .env', 'key'],
   maxAge: 24 * 60 * 60 * 1000
 }));
 

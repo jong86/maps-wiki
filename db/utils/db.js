@@ -105,8 +105,6 @@ module.exports = knex => ({
         image: pin.image,
         url: pin.url,
         user_id: pin.user_id,
-        created_at: pin.created_at,
-        version: pin.version,
         type_id: pin.type_id,
         map_id: map_id
       })
