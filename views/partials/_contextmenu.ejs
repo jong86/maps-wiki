@@ -1,7 +1,15 @@
+<%- include('_newmarkermenu') %>
+
+<img id="crosshair" src="icons/crosshair.png" />
 <div id="context-menu" class="noselect">
   <ul>
     <li id="new-marker">New marker</li>
+    <li id="marker-type-options">
+      <div class="marker-select-button" data-markerType="food"><img src="icons/food.png" /></div>
+      <div class="marker-select-button" data-markerType="bar"><img src="icons/bar.png" /></div>
+      <div class="marker-select-button" data-markerType="cafe"><img src="icons/cafe.png" /></div>
+      <div class="marker-select-button" data-markerType="view"><img src="icons/view.png" /></div>
+      <div class="marker-select-button" data-markerType="misc"><img src="icons/misc.png" /></div>
+    </li>
   </ul>
-
-
 </div>

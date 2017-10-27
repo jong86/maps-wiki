@@ -1,15 +1,26 @@
 #map {
   height: 100%;
   width: 100%
+  position
+}
+
+
+#crosshair {
+  display: none;
+  position: absolute;
+  z-index: 4;
 }
 
 #context-menu {
-  width: 6rem;
-  height: 0.9rem;
+  // width: 10rem;
+  // height: 0.9rem;
   display: none;
   position: absolute;
   z-index: 5;
-  background-color: #00FFAA;
+  padding: 0.15rem;
+  background-color: rgba(127, 209, 182, 0.5);
+  border: 1px solid black;
+  border-radius: 6px;
 
   ul {
     list-style-type: none;
@@ -17,13 +28,34 @@
     padding: 0;
     font-size: 0.8rem;
 
-    &:hover {
-      background-color: green;
+    .marker-select-button:hover {
+      background-color: rgb(0, 255, 0);
       cursor: copy;
     }
-
   }
 
+  #new-marker {
+    background-color: rgba(127, 209, 182, 1);
+  }
+}
+
+#new-marker-menu {
+  display: none;
+  position: absolute;
+  z-index: 6;
+  background-color: rgba(127, 209, 182, 1);
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: .8rem;
+
+}
+
+
+.info-window {
+
+  li {
+    list-style-type: none
+  }
 }
 
 .noselect {

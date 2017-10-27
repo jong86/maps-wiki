@@ -17,7 +17,7 @@ exports.seed = function(knex, Promise) {
           created_at: '2017-10-24',
           version: '2017-10-24',
           type_id: 0,
-          map_id: 1
+          map_id: 0
         }),
         knex('pins').insert({
           id: 1,
