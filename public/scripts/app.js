@@ -143,6 +143,7 @@ function initMap() {
             <li>map_id: {{map_id}}</li>
             <li>created_at: {{created_at}}</li>
             <li>version: {{version}}</li>
+            <li>pin_id: {{id}}</li>
             <li>
               <button class="edit">edit</button>
               <button class="delete">delete</button>
@@ -192,10 +193,11 @@ function initMap() {
       $(document).on("click", ".info-window .save", function(event) { // For updating pin values
         event.preventDefault();
         var pin_id = $(this).parent().parent().parent().data("pin_id");
+        console.log(currentMarkers);
         var extraData = {
-          // latitude: mapPos.lat, // need to update for 'this'
-          // longitude: mapPos.lng, // need to update
-          // type_id: Number(markerTypeList[markerType]), // need to update
+          latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
+          longitude: currentMarkers[pin_id].position.lng, // need to update
+          type_id: currentMarkers[pin_id].type_id, // need to update
           map_id: 0,
           pin_id: pin_id
         };
@@ -215,12 +217,14 @@ function initMap() {
       $(document).on("click", ".info-window .delete", function(event) {
         event.preventDefault();
         var pin_id = $(this).parent().parent().parent().parent().data("pin_id");
+        console.log("delete button clicked for", pin_id);
+        console.log(currentMarkers);
         $.ajax({
           method:"DELETE",
           url: `pins/${pin_id}`,
         }).then(function(results){
           console.log(results);
-          currentMarkers.pin_id.setMap(null);
+          currentMarkers[pin_id].setMap(null);
         })
       });
       
@@ -240,10 +244,22 @@ function initMap() {
           draggable: true,
           icon: iconPath + types[Number(data.type_id)]
         })
-        marker.addListener("dblclick", function() { // Right to delete marker
-          marker.setMap(null);
+        marker.addListener("dragend", function(event) {
+          mapPos = event.latLng;
+          data = {
+            latitude: mapPos.lat,
+            longitude: mapPos.lng
+          };
+          console.log("drag ended for pin:", data);
+          $.ajax({
+            method:"PUT",
+            url: `pins/${pin_id}`,
+            data: data
+          }).then(function(results){
+            console.log(results);
+          })
         });
-        marker.addListener("click", function() { // Right to delete marker
+        marker.addListener("click", function() {
           infoWindow.open(map, marker);
         });
         currentMarkers[data.id] = marker;
