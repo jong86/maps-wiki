@@ -35,45 +35,56 @@ module.exports = function (db) {
   });
 
   mapRoutes.post('/', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t create map without logging in');
+      return;
+    }
+    const newMap = req.body;
     const map = {
-      id: 1,
-      name: 'Best cat cafes in Vancouver',
-      created_at: Date.now(),
-      user_id: 0
+      name: newMap.name,
+      user_id: req.session.user_id
     };
 
-    db.createMap(map, function (mapId, err) {
+    db.createMap(map, function (map, err) {
       if (err) {
         console.log(err);
       }
-      res.json(mapId);
+      res.json(map);
     });
   });
 
   mapRoutes.put('/:id', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t edit map without logging in');
+      return;
+    }
+    const map_id = req.params.id;
+    const updatedMap = req.body;
     const map = {
-      id: 0,
-      name: 'Best cat cafes in Vancouver',
-      created_at: Date.now(),
-      user_id: 0
+      name: updatedMap.name,
+      user_id: req.session.user_id
     };
 
-    db.updateMapById(map.id, map, function (err) {
+    db.updateMapByMapId(map_id, map, function (err) {
       if (err) {
         console.log(err);
       }
-      res.send('edits map if user is authorized');
+      res.json(map);
     });
   });
 
   mapRoutes.delete('/:id', function (req, res) {
-    const mapId = req.params.id;
-    db.deleteMapById(mapId, function (err) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t delete map without logging in');
+      return;
+    }
+    const map_id = req.params.id;
+    db.deleteMapByMapId(map_id, function (err) {
       if (err) {
         console.log(err);
       }
-      res.send('deletes map if user is authorized');
     });
+    res.send(200, 'deleted');
   });
   return mapRoutes;
 };
