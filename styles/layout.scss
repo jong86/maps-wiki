@@ -8,6 +8,13 @@ html, body {
   padding: 0;
 }
 
+.nav>li {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  color: #337ab7;
+}
+
 // Navigation
 
 // --Topbar
@@ -28,14 +35,14 @@ img {
 //     background-color: white;
 // }
 
-// @media(min-width:768px) {
-//     #page-wrapper {
-//         position: inherit;
-//         margin: 0 0 0 250px;
-//         padding: 0 30px;
-//         border-left: 1px solid darken(grey, 6.5%);
-//     }
-// }
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        padding: 0 30px;
+        border-left: 1px solid darken(grey, 6.5%);
+    }
+}
 
 // Navigation
 
@@ -84,12 +91,6 @@ img {
   margin-bottom: 15px;
   padding: 0px 20px;
 }
-.dropdown-menu {
-  z-index: 100000;
-  position: relative;
-  overflow: display
-}
-
 
 //sidebar
 

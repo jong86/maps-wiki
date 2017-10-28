@@ -1,43 +1,34 @@
 <nav id="wrapper" class="navbar navbar-defaults" role="navigation">
-        <div class="navbar-header">
-            <img src="https://openclipart.org/download/234349/flat_location_logo.svg" alt="wikimap">
-            <button type="button" class="sidebar-toggle btn">Hide Menu</button>
-        </div>
-        <div>
-            <ul class="navbar-top-links navbar-middle">
-                <li>
-                    <button class="btn btn-primary">Edit</button>
-                    <button class="btn btn-primary">Create</button>
-                    <button class="btn btn-primary">Delete</button>
-                </li>
-            </ul>
-            <ul class="navbar-top-links navbar-right">
-                <li>
-                    <button action"logout" method="delete" id="logout-button" class="btn btn-primary btn-block">Log out</button>
-                </li>  
-                <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <form class="login-form" role="form" method="post" action="login">
-                                <div class="form-group">
-                                    <label>Email address</label>
-                                    <input type="email" class="email-field" placeholder="Email address" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" class="password-field" id="exampleInputPassword2" placeholder="Password" required>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" id="login-button" class="btn btn-primary btn-block">Log in</button>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
+    <div class="navbar-header">
+        <img src="https://openclipart.org/download/234349/flat_location_logo.svg" alt="wikimap">
+        <button type="button" class="sidebar-toggle btn">Hide Menu</button>
+    </div>
+    <div>
+        <ul class="navbar-top-links navbar-middle">
+            <li>
+                <button class="btn btn-primary edit-map-btn">Edit</button>
+                <button class="btn btn-primary create-map-btn">Create</button>
+                <button class="btn btn-primary delete-map-btn">Delete</button>
+                <button style="color:red" class="btn btn-primary fa fa-heart"></button>
             </li>
         </ul>
-    </nav>
+        <ul class="navbar-top-links navbar-right">
+            <li>
+                <button action"logout" method="delete" id="logout-button" class="btn btn-primary btn-block">Log out</button>
+            </li>  
+            <li>
+                <form class="login-form" role="form" method="post" action="login">
+                    <ul class="users">
+                        <li>
+                            <button type="submit" id="login-button" class="btn btn-primary btn-block">USER 1</button>
+                        </li>
+                        <li>
+                            <button type="submit" id="login-button" class="btn btn-primary btn-block">USER 2</button>
+                        </li>
+                    </ul>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
     

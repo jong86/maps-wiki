@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="createPinByMapId"><span class="type-signature"></span>createPinByMapId<span class="signature">(map_id, pin, callback)</span><span class="type-signature"> &rarr; {integer}</span></h4>
+    <h4 class="name" id="createMap"><span class="type-signature"></span>createMap<span class="signature">(map, callback)</span><span class="type-signature"> &rarr; {integer|err}</span></h4>
     
 
     
@@ -113,7 +113,7 @@
 
 <div class="description">
     DATABASE FUNCTION 
-createPinByMapId returns an array of all the users in system.
+createMap creates an idividial map.
 </div>
 
 
@@ -149,7 +149,208 @@ createPinByMapId returns an array of all the users in system.
 
         <tr>
             
-                <td class="name"><code>map_id</code></td>
+                <td class="name"><code>map</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">map object; includes name and user_id</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    id -is the id of the map that was created.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">integer</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createPinByMapId"><span class="type-signature"></span>createPinByMapId<span class="signature">(mapId, pin, callback)</span><span class="type-signature"> &rarr; {integer|err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    DATABASE FUNCTION 
+createPinByMapId returns pinId.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mapId</code></td>
             
 
             <td class="type">
@@ -252,7 +453,208 @@ createPinByMapId returns an array of all the users in system.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line87">line 87</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    id -is the id of the pin that was created.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">integer</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="deleteMapByMapId"><span class="type-signature"></span>deleteMapByMapId<span class="signature">(mapId, callback)</span><span class="type-signature"> &rarr; {err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    DATABASE FUNCTION 
+deleteMapByMapId deletes an individual map from the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mapId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">integer indicating the map to delete.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -279,7 +681,7 @@ createPinByMapId returns an array of all the users in system.
 
         
 <div class="param-desc">
-    id -is the id of the pin that was created.
+    if there is an error, err will be returned.
 </div>
 
 
@@ -290,7 +692,7 @@ createPinByMapId returns an array of all the users in system.
     </dt>
     <dd>
         
-<span class="param-type">integer</span>
+<span class="param-type">err</span>
 
 
     </dd>
@@ -308,7 +710,7 @@ createPinByMapId returns an array of all the users in system.
     
 
     
-    <h4 class="name" id="getMaps"><span class="type-signature"></span>getMaps<span class="signature">(callback)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="deletePinByPinId"><span class="type-signature"></span>deletePinByPinId<span class="signature">(pinId, callback)</span><span class="type-signature"> &rarr; {err}</span></h4>
     
 
     
@@ -316,7 +718,369 @@ createPinByMapId returns an array of all the users in system.
 
 
 <div class="description">
-    Get Maps Gets a list of all the maps in the system regardless.
+    DATABASE FUNCTION 
+deletePinByPinId deletes an individual pin
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pinId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">integer indicating the pin to delete.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line99">line 99</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getMapById"><span class="type-signature"></span>getMapById<span class="signature">(mapId, callback)</span><span class="type-signature"> &rarr; {err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    DATABASE FUNCTION 
+getMapById returns a map for a given mapId
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mapId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">integer indicating the map to find.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getMaps"><span class="type-signature"></span>getMaps<span class="signature">(callback)</span><span class="type-signature"> &rarr; {object|err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get Maps Gets a list of all the maps in the system.
 </div>
 
 
@@ -409,7 +1173,7 @@ createPinByMapId returns an array of all the users in system.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line2">line 2</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line117">line 117</a>
     </li></ul></dd>
     
 
@@ -433,8 +1197,8 @@ createPinByMapId returns an array of all the users in system.
 
 
 <h5>Returns:</h5>
-
-        
+<ul>
+        <li>
 <div class="param-desc">
     maps = arry of maps
 </div>
@@ -452,8 +1216,28 @@ createPinByMapId returns an array of all the users in system.
 
     </dd>
 </dl>
-
+</li>
     
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
 
 
 
@@ -465,7 +1249,7 @@ createPinByMapId returns an array of all the users in system.
     
 
     
-    <h4 class="name" id="getPinByPinId"><span class="type-signature"></span>getPinByPinId<span class="signature">(pin_id, callback)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="getPinByPinId"><span class="type-signature"></span>getPinByPinId<span class="signature">(pinId, callback)</span><span class="type-signature"> &rarr; {object|err}</span></h4>
     
 
     
@@ -510,7 +1294,7 @@ getPinByPinId gets an individual pin independent of whatever map it's on
 
         <tr>
             
-                <td class="name"><code>pin_id</code></td>
+                <td class="name"><code>pinId</code></td>
             
 
             <td class="type">
@@ -590,7 +1374,7 @@ getPinByPinId gets an individual pin independent of whatever map it's on
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line31">line 31</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -614,8 +1398,8 @@ getPinByPinId gets an individual pin independent of whatever map it's on
 
 
 <h5>Returns:</h5>
-
-        
+<ul>
+        <li>
 <div class="param-desc">
     rowd[0] -  a single pin
 </div>
@@ -633,8 +1417,28 @@ getPinByPinId gets an individual pin independent of whatever map it's on
 
     </dd>
 </dl>
-
+</li>
     
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
 
 
 
@@ -646,7 +1450,7 @@ getPinByPinId gets an individual pin independent of whatever map it's on
     
 
     
-    <h4 class="name" id="getPinsByMapId"><span class="type-signature"></span>getPinsByMapId<span class="signature">(map_id, callback)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="getPinsByMapId"><span class="type-signature"></span>getPinsByMapId<span class="signature">(mapId, callback)</span><span class="type-signature"> &rarr; {object|err}</span></h4>
     
 
     
@@ -691,7 +1495,7 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
 
         <tr>
             
-                <td class="name"><code>map_id</code></td>
+                <td class="name"><code>mapId</code></td>
             
 
             <td class="type">
@@ -771,7 +1575,7 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line14">line 14</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -795,8 +1599,8 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
 
 
 <h5>Returns:</h5>
-
-        
+<ul>
+        <li>
 <div class="param-desc">
     Pins = array of pins
 </div>
@@ -814,8 +1618,28 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
 
     </dd>
 </dl>
-
+</li>
     
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
 
 
 
@@ -827,7 +1651,7 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
     
 
     
-    <h4 class="name" id="getUsers"><span class="type-signature"></span>getUsers<span class="signature">(callback)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="getUsers"><span class="type-signature"></span>getUsers<span class="signature">(callback)</span><span class="type-signature"> &rarr; {object|err}</span></h4>
     
 
     
@@ -928,7 +1752,231 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line75">line 75</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line208">line 208</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+<ul>
+        <li>
+<div class="param-desc">
+    Users = array of Users
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+</li>
+    
+        <li>
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+</li>
+    </ul>
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateMapbyMapId"><span class="type-signature"></span>updateMapbyMapId<span class="signature">(mapId, map, callback)</span><span class="type-signature"> &rarr; {err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    DATABASE FUNCTION 
+updateMapbyMapId updates an idividial map from the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mapId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">map id</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">map object; includes name and user_id</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -955,7 +2003,7 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
 
         
 <div class="param-desc">
-    Users = array of Users
+    if there is an error, err will be returned.
 </div>
 
 
@@ -966,7 +2014,188 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
     </dt>
     <dd>
         
-<span class="param-type">object</span>
+<span class="param-type">err</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updatePinByPinId"><span class="type-signature"></span>updatePinByPinId<span class="signature">(pinId, callback)</span><span class="type-signature"> &rarr; {err}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    DATABASE FUNCTION 
+updatePinByPinId updates the entire contents of a pin, searching on pinId
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>pinId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">integer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">integer indicating the pin to find.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    if there is an error, err will be returned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">err</span>
 
 
     </dd>
@@ -994,13 +2223,13 @@ getPinsByMapId gets a list of pins that are associated with a specific map.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createPinByMapId">createPinByMapId</a></li><li><a href="global.html#getMaps">getMaps</a></li><li><a href="global.html#getPinByPinId">getPinByPinId</a></li><li><a href="global.html#getPinsByMapId">getPinsByMapId</a></li><li><a href="global.html#getUsers">getUsers</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createMap">createMap</a></li><li><a href="global.html#createPinByMapId">createPinByMapId</a></li><li><a href="global.html#deleteMapByMapId">deleteMapByMapId</a></li><li><a href="global.html#deletePinByPinId">deletePinByPinId</a></li><li><a href="global.html#getMapById">getMapById</a></li><li><a href="global.html#getMaps">getMaps</a></li><li><a href="global.html#getPinByPinId">getPinByPinId</a></li><li><a href="global.html#getPinsByMapId">getPinsByMapId</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#updateMapbyMapId">updateMapbyMapId</a></li><li><a href="global.html#updatePinByPinId">updatePinByPinId</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Oct 27 2017 02:55:37 GMT+0000 (UTC)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 28 2017 13:17:46 GMT-0700 (PDT)
 </footer>
 
 <script> prettyPrint(); </script>
