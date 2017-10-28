@@ -24,7 +24,7 @@ module.exports = function (db) {
 
   pinRoutes.post('/', function (req, res) {
     if (!req.session.user_id) {
-      res.send(401, 'Can\'t create pin without logging in');
+      res.status(401, 'Can\'t create pin without logging in');
       return;
     }
     const newPin = req.body;
@@ -40,7 +40,7 @@ module.exports = function (db) {
       map_id: newPin.map_id
     };
     // TODO get jon to pass in mapid, and pin information. Construct pin object. 
-    db.createPinByMapId(0, pin, function (pinId, err) {
+    db.createPinByMapId(pin.map_id, pin, function (pinId, err) {
       if (err) {
         console.log(err);
       }
