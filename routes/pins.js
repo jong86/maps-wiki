@@ -23,8 +23,10 @@ module.exports = function (db) {
   });
 
   pinRoutes.post('/', function (req, res) {
-    //  creates new pin
-    //  some dummy data
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t create pin without logging in');
+      return;
+    }
     const newPin = req.body;
     const pin = {
       latitude: newPin.latitude,
@@ -48,30 +50,33 @@ module.exports = function (db) {
   });
 
   pinRoutes.put('/:id', function (req, res) {
-    const pinId = req.params.id;
-    //  update pin if user is authorized
-    //  dummmyy data
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t edit pin without logging in');
+      return;
+    }
+    const updatedPin = req.body;
     const pin = {
-      id: 0,
-      latitude: '49.2827',
-      longitude: '-123.1207',
-      title: 'Official Vancouver Co-ordinates Cafe',
-      description: 'A good cafe with no beans',
-      image: 'http://www.fillmurray.com/200/300',
-      url: 'https://www.youtube.com/watch?v=IzVqkV_hQjc',
-      user_id: 0,
-      type_id: 0,
-      map_id: 0,
-      created_at: Date.now(),
-      version: Date.now()
+      latitude: updatedPin.latitude,
+      longitude: updatedPin.longitude,
+      title: updatedPin.title,
+      description: updatedPin.description,
+      image: updatedPin.image,
+      url: updatedPin.url,
+      user_id: req.session.user_id,
+      type_id: updatedPin.type_id,
+      map_id: updatedPin.map_id
     };
     res.json(pin);
   });
 
   pinRoutes.delete('/:id', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t delete pin without logging in');
+      return;
+    }
     const pinId = req.params.id;
     //  delete pin if user is authorized
-    res.redirect('./maps/');
+    res.send(200, 'deleted');
   });
 
   return pinRoutes;
