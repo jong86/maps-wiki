@@ -65,7 +65,7 @@ module.exports = knex => ({
         image: pin.image,
         url: pin.url,
         user_id: pin.user_id,
-        type_id: pin.type_id,
+        type: pin.type,
         map_id: pin.map_id
       })
       .then(function () {
@@ -153,7 +153,7 @@ module.exports = knex => ({
         image: pin.image,
         url: pin.url,
         user_id: pin.user_id,
-        type_id: pin.type_id,
+        type: pin.type,
         map_id: map_id
       })
       .returning('id')

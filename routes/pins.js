@@ -14,10 +14,8 @@ module.exports = function (db) {
       image: 'http://www.fillmurray.com/200/300',
       url: 'https://www.youtube.com/watch?v=IzVqkV_hQjc',
       user_id: 0,
-      type_id: 0,
-      map_id: 0,
-      created_at: Date.now(),
-      version: Date.now()
+      type: 'bar.png',
+      map_id: 0
     };
     res.json(pin);
   });
@@ -36,7 +34,7 @@ module.exports = function (db) {
       image: newPin.image,
       url: newPin.url,
       user_id: req.session.user_id,
-      type_id: newPin.type_id,
+      type: newPin.type,
       map_id: newPin.map_id
     };
     // TODO get jon to pass in mapid, and pin information. Construct pin object. 
@@ -64,7 +62,7 @@ module.exports = function (db) {
       image: updatedPin.image,
       url: updatedPin.url,
       user_id: req.session.user_id,
-      type_id: updatedPin.type_id,
+      type: updatedPin.type,
       map_id: updatedPin.map_id
     };
 
