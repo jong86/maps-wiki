@@ -6,7 +6,7 @@ const loginRoutes = express.Router();
 
 module.exports = function () {
   loginRoutes.post('/', function (req, res) {
-    req.session.userId = '0';
+    req.session.user_id = '0';
     res.send('logged in');
   });
 

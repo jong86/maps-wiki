@@ -45,12 +45,60 @@ module.exports = knex => ({
         callback(rows[0], err);
       });
   },
-
-  getMapById: function (map_id, callback) {
+  /**
+  * DATABASE FUNCTION 
+  * updatePinByPinId updates the entire contents of a pin, searching on pinId
+  * @function updatePinByPinId
+  * @param {integer} pinId - integer indicating the pin to find. 
+  * @param {function} callback 
+  */
+  updatePinByPinId: function (pinId, pin, callback) {
+    console.log('updatePinByPinId', pinId, pin);
+    const err = null;
+    knex('pins')
+      .where('id', pinId)
+      .update({
+        latitude: pin.latitude,
+        longitude: pin.longitude,
+        title: pin.title,
+        description: pin.description,
+        image: pin.image,
+        url: pin.url,
+        user_id: pin.user_id,
+        type_id: pin.type_id,
+        map_id: pin.map_id
+      })
+      .then(function () {
+        callback(err);
+      });
+  },
+  /**
+  * DATABASE FUNCTION 
+  * deletePinByPinId deletes an individual pin
+  * @function deletePinByPinId
+  * @param {integer} pinId - integer indicating the pin to delete. 
+  * @param {function} callback 
+  */
+  deletePinByPinId: function (pinId, callback) {
+    const err = null;
+    knex('pins')
+      .where('id', pinId)
+      .del()
+      .then(function (rows) {
+        callback(rows[0], err);
+      });
+  },
+  /**
+  * DATABASE FUNCTION 
+  * getMapById returns a map for a given mapId
+  * @function getMapById
+  * @param {integer} mapId - integer indicating the map to find. 
+  * @param {function} callback 
+  */getMapById: function (mapId, callback) {
     const err = null;
     //
     knex('maps')
-      .where('id', map_id)
+      .where('id', mapId)
       .then(function (rows) {
         callback(rows[0], err);
       });

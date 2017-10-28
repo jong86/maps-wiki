@@ -23,7 +23,7 @@ function initMap() {
       
   
       
-      var currentMarkers = []; // Possibly to use for edit history
+      var currentMarkers = {}; // Possibly to use for edit history
   
       var mapPos; // For storing google map latitude and longitude
       var markerType;
@@ -78,16 +78,17 @@ function initMap() {
         return query_string;
       };
       
+      var markerTypeList = {
+        food: 0,
+        cafe: 1,
+        bar: 2,
+        view: 3,
+        misc: 4
+      }
+
       $("#new-marker-form").on("submit", function(event) { // Submits new marker form
         event.preventDefault();
         $(newMarkerMenu).css("display", "none");
-        var markerTypeList = {
-          food: 0,
-          cafe: 1,
-          bar: 2,
-          view: 3,
-          misc: 4
-        }
         var extraData = {
           latitude: mapPos.lat,
           longitude: mapPos.lng,
@@ -128,22 +129,104 @@ function initMap() {
 
       // Handlebars template:
       var sourceInfoWindow = `
-      <div class="info-window">
-        <ul>
-          <li><img src="{{image}}" /></li>
-          <li>latitude: {{latitude}}</li>
-          <li>longitude: {{longitude}}</li>
-          <li>title: {{title}}</li>
-          <li>description: {{description}}</li>
-          <li>url: <a href="{{url}}">{{url}}</a></li>
-          <li>user_id: {{user_id}}</li>
-          <li>type_id: {{type_id}}</li>
-          <li>map_id: {{map_id}}</li>
-          <li>created_at: {{created_at}}</li>
-          <li>version: {{version}}</li>
-        </ul>
+      <div class="info-window" data-pin_id="{{id}}">
+        <div class="info-window-display">
+          <ul>
+            <li><img src="{{image}}" /></li>
+            <li>latitude: {{latitude}}</li>
+            <li>longitude: {{longitude}}</li>
+            <li>title: {{title}}</li>
+            <li>description: {{description}}</li>
+            <li>url: <a href="{{url}}">{{url}}</a></li>
+            <li>user_id: {{user_id}}</li>
+            <li>type_id: {{type_id}}</li>
+            <li>map_id: {{map_id}}</li>
+            <li>created_at: {{created_at}}</li>
+            <li>version: {{version}}</li>
+            <li>pin_id: {{id}}</li>
+            <li>
+              <button class="edit">edit</button>
+              <button class="delete">delete</button>
+            </li>
+          </ul>
+        </div>
+        <div class="info-window-edit">
+          <form class="edit-marker-form">
+            <ul>
+              <li>
+                <label for="title" class="noselect">Title:</label>
+                <input class="input-field" class="title" type="text" name="title" /><br />
+              </li>
+              <li>
+                <label for="description" class="noselect">Description:</label>
+                <input class="input-field" class="description" type="text" name="description" /><br />
+              </li>
+              <li>
+                <label for="image" class="noselect">Image:</label>
+                <input class="input-field" class="image" type="text" name="image" /><br />
+              </li>
+              <li>
+                <label for="url" class="noselect">URL:</label>
+                <input class="input-field" class="url" type="text" name="url" /><br />
+              </li>
+            </ul>
+            <input class="save" type="submit" value="save">
+            <button class="cancel">cancel</button>
+          </form>
+        </div>
       </div>
       `;
+
+      $(document).on("click", ".info-window .edit", function(event) {
+        event.preventDefault();
+        console.log($(this).closest(".info-window-edit"));
+        $(this).parent().parent().parent().css("display", "none");
+        $(this).parent().parent().parent().next().css("display", "inline");
+      });
+      
+      $(document).on("click", ".info-window .cancel", function(event) {
+        event.preventDefault();
+        $(this).parent().parent().css("display", "none");
+        $(this).parent().parent().prev().css("display", "inline");
+      });
+      
+      $(document).on("click", ".info-window .save", function(event) { // For updating pin values
+        event.preventDefault();
+        var pin_id = $(this).parent().parent().parent().data("pin_id");
+        console.log(currentMarkers);
+        var extraData = {
+          latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
+          longitude: currentMarkers[pin_id].position.lng, // need to update
+          type_id: currentMarkers[pin_id].type_id, // need to update
+          map_id: 0,
+          pin_id: pin_id
+        };
+        var data = $(this).parent().serialize() + "&" + $.param(extraData);
+        console.log("I send: ", data);
+        $.ajax({
+          method:"PUT",
+          url: `pins/${pin_id}`,
+          data: data
+        }).then(function(results) {
+          console.log("Edit complete:", results);
+          $(this).parent().parent().css("display", "none");
+          $(this).parent().parent().prev().css("display", "inline");
+        });
+      });
+      
+      $(document).on("click", ".info-window .delete", function(event) {
+        event.preventDefault();
+        var pin_id = $(this).parent().parent().parent().parent().data("pin_id");
+        console.log("delete button clicked for", pin_id);
+        console.log(currentMarkers);
+        $.ajax({
+          method:"DELETE",
+          url: `pins/${pin_id}`,
+        }).then(function(results){
+          console.log(results);
+          currentMarkers[pin_id].setMap(null);
+        })
+      });
       
       function createMarker(data) { // Gets called after submitting new marker form...
         var compiledInfoWindowTemplate = Handlebars.compile(sourceInfoWindow);
@@ -161,13 +244,25 @@ function initMap() {
           draggable: true,
           icon: iconPath + types[Number(data.type_id)]
         })
-        marker.addListener("dblclick", function() { // Right to delete marker
-          marker.setMap(null);
+        marker.addListener("dragend", function(event) {
+          mapPos = event.latLng;
+          data = {
+            latitude: mapPos.lat,
+            longitude: mapPos.lng
+          };
+          console.log("drag ended for pin:", data);
+          $.ajax({
+            method:"PUT",
+            url: `pins/${pin_id}`,
+            data: data
+          }).then(function(results){
+            console.log(results);
+          })
         });
-        marker.addListener("click", function() { // Right to delete marker
+        marker.addListener("click", function() {
           infoWindow.open(map, marker);
         });
-        currentMarkers.push(marker);
+        currentMarkers[data.id] = marker;
       }
   
    

@@ -11,30 +11,35 @@
 }
 
 #context-menu {
-  // width: 10rem;
-  // height: 0.9rem;
   display: none;
   position: absolute;
-  z-index: 2;
-  padding: 0.15rem;
+  z-index: 5;
+  padding: 0;
   background-color: rgba(127, 209, 182, 0.5);
   border: 1px solid black;
   border-radius: 6px;
-
+  
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     font-size: 0.8rem;
-
-    .marker-select-button:hover {
-      background-color: rgb(0, 255, 0);
-      cursor: copy;
+    
+    li {
+      text-align: center;
+      
+      .marker-select-button:hover {
+        background-color: rgba(118, 255, 118, 0.822);
+        cursor: copy;
+      }
     }
   }
-
+  
   #new-marker {
-    background-color: rgba(127, 209, 182, 1);
+    border-bottom: 1px solid rgb(107, 107, 107);
+    padding: .3rem;
+    border-radius: 6px 6px 0 0;
+    background-color: rgb(211, 211, 211);
   }
 }
 
@@ -42,7 +47,7 @@
   display: none;
   position: absolute;
   z-index: 6;
-  background-color: rgba(127, 209, 182, 1);
+  background-color: rgb(202, 202, 202);
   border: 1px solid black;
   border-radius: 6px;
   font-size: .8rem;
@@ -50,11 +55,17 @@
 }
 
 
-.info-window {
+.info-window-display {
 
   li {
     list-style-type: none
   }
+}
+
+.info-window-edit {
+
+  display: none
+
 }
 
 .noselect {
