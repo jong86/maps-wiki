@@ -220,13 +220,24 @@ function initMap() {
       });
       var iconPath = "icons/";
       var types = ["food.png", "cafe.png", "bar.png", "view.png", "misc.png"];
+
+      console.log(data.title);
+      var labelText = (data.title === "") ? " " : data.title;
+
       var marker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
         title: data.description,
-        label: data.title,
+        label: {
+          text: labelText,
+          color: "rgb(107, 80, 80)"
+        },
+        icon: {
+          url: data.type,
+          labelOrigin: new google.maps.Point(12, 32),
+          fillColor: "red"
+        },
         draggable: true,
-        icon: data.type
       })
       marker.addListener("dragend", function(event) {
         // mapPos = event.latLng;
