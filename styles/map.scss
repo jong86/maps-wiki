@@ -1,13 +1,30 @@
+<<<<<<< HEAD
 #map {
   height: 100%;
   width: 100%;
+=======
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+>>>>>>> master
 }
 
+#map {
+  height: 90%;
+  width: 100%;
+  z-index: 0;
+}
 
 #crosshair {
   display: none;
   position: absolute;
   z-index: 3;
+  width: 24px;
 }
 
 #context-menu {
@@ -15,8 +32,8 @@
   position: absolute;
   z-index: 5;
   padding: 0;
-  background-color: rgba(127, 209, 182, 0.5);
-  border: 1px solid black;
+  background-color: rgba(209, 209, 209, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.33);
   border-radius: 6px;
   
   ul {
@@ -28,18 +45,28 @@
     li {
       text-align: center;
       
+      .marker-select-button {
+        display: inline-block;
+      }
+
+      .marker-select-button img {
+        width: 24px;
+      }
+
       .marker-select-button:hover {
-        background-color: rgba(118, 255, 118, 0.822);
+        background-color: rgba(162, 238, 237, 0.645);
         cursor: copy;
       }
     }
   }
   
   #new-marker {
+    font-size: 1.2rem;
     border-bottom: 1px solid rgb(107, 107, 107);
     padding: .3rem;
     border-radius: 6px 6px 0 0;
-    background-color: rgb(211, 211, 211);
+    background-color: rgba(211, 211, 211, 0.618);
+
   }
 }
 
@@ -47,13 +74,22 @@
   display: none;
   position: absolute;
   z-index: 6;
-  background-color: rgb(202, 202, 202);
-  border: 1px solid black;
+  background-color: rgb(237, 237, 237);
+  border: 1px solid rgba(0, 0, 0, 0.378);
   border-radius: 6px;
   font-size: .8rem;
+  text-align: center;
+
+  ul {
+    list-style-type: none;
+  }
+
+  h2 {
+    color: black;
+    font-size: 1.4rem;
+  }
 
 }
-
 
 .info-window-display {
 
@@ -63,17 +99,43 @@
 }
 
 .info-window-edit {
-
-  display: none
-
+  display: none;
 }
 
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+.control-div {
+  padding: 0.6%;
+
+  .control-wrapper {
+    background-color: rgba(255, 255, 255, 0);
+    border-style: solid;
+    border-color: rgba(106, 106, 106, 0.508);
+    border-width: 0;
+    cursor: pointer;
+    text-align: center;
+    width: 32px;
+    height: 64px;
+    color: black;
+
+    .zoom-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background-color: rgba(255, 255, 255, 0.467);
+      border-color: rgba(121, 121, 121, 0.289);
+    }
+
+    .zoom-in {
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+    }
+
+    .zoom-out {
+      border-top-style: solid;
+      border-top-width: 1px;
+    }
+    
+
+  }
 }

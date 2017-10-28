@@ -65,7 +65,7 @@ module.exports = knex => ({
         image: pin.image,
         url: pin.url,
         user_id: pin.user_id,
-        type_id: pin.type_id,
+        type: pin.type,
         map_id: pin.map_id
       })
       .then(function () {
@@ -106,18 +106,38 @@ module.exports = knex => ({
 
   createMap: function (map, callback) {
     const err = null;
-    const mapId = 1;
-    callback(mapId, err);
+    knex('maps')
+      .insert({
+        name: map.name,
+        user_id: map.user_id
+      })
+      .returning('id')
+      .then(function (id) {
+        callback(id, err);
+      });
   },
 
-  updateMapById: function (map_id, map, callback) {
+  updateMapByMapId: function (map_id, map, callback) {
     const err = null;
-    callback(err);
+    knex('maps')
+      .where('id', map_id)
+      .update({
+        name: map.name,
+        user_id: map.user_id
+      })
+      .then(function () {
+        callback(err);
+      });
   },
 
-  deleteMapById: function (map_id, callback) {
+  deleteMapByMapId: function (map_id, callback) {
     const err = null;
-    callback(err);
+    knex('maps')
+      .where('id', map_id)
+      .del()
+      .then(function (rows) {
+        callback(err);
+      });
   },
 
   /**
@@ -153,7 +173,7 @@ module.exports = knex => ({
         image: pin.image,
         url: pin.url,
         user_id: pin.user_id,
-        type_id: pin.type_id,
+        type: pin.type,
         map_id: map_id
       })
       .returning('id')
