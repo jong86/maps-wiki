@@ -24,8 +24,7 @@ module.exports = function (db) {
 
   pinRoutes.post('/', function (req, res) {
     if (!req.session.user_id) {
-      console.log(req.session);
-      console.log("Can't create pins if not logged in");
+      res.send(401, 'Can\'t create pin without logging in');
       return;
     }
     const newPin = req.body;
@@ -52,7 +51,7 @@ module.exports = function (db) {
 
   pinRoutes.put('/:id', function (req, res) {
     if (!req.session.user_id) {
-      console.log("Can't edit pins if not logged in");
+      res.send(401, 'Can\'t edit pin without logging in');
       return;
     }
     const updatedPin = req.body;
@@ -71,9 +70,13 @@ module.exports = function (db) {
   });
 
   pinRoutes.delete('/:id', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t delete pin without logging in');
+      return;
+    }
     const pinId = req.params.id;
     //  delete pin if user is authorized
-    res.redirect('./maps/');
+    res.send(200, 'deleted');
   });
 
   return pinRoutes;
