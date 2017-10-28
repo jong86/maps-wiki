@@ -292,34 +292,22 @@ function initMap() {
     function ZoomControl(controlDiv, map) {
       
       // Creating divs & styles for custom zoom control
-      controlDiv.style.padding = '5px';
+      controlDiv.className = "control-div";
     
-      // Set CSS for the control wrapper
+      // Creates control wrapper:
       var controlWrapper = document.createElement('div');
-      controlWrapper.style.backgroundColor = 'white';
-      controlWrapper.style.borderStyle = 'solid';
-      controlWrapper.style.borderColor = 'gray';
-      controlWrapper.style.borderWidth = '1px';
-      controlWrapper.style.cursor = 'pointer';
-      controlWrapper.style.textAlign = 'center';
-      controlWrapper.style.width = '32px'; 
-      controlWrapper.style.height = '64px';
+      controlWrapper.className = "control-wrapper";
       controlDiv.appendChild(controlWrapper);
       
-      // Set CSS for the zoomIn
+      // Creates zoom buttons:
       var zoomInButton = document.createElement('div');
-      zoomInButton.style.width = '32px'; 
-      zoomInButton.style.height = '32px';
-      /* Change this to be the .png image you want to use */
-      zoomInButton.style.backgroundImage = 'url("http://placehold.it/32/00ff00")';
+      zoomInButton.className = "zoom-button zoom-in";
+      zoomInButton.innerHTML = `<i class="fa fa-search-plus fa-2x" aria-hidden="true"></i>`;
       controlWrapper.appendChild(zoomInButton);
-        
-      // Set CSS for the zoomOut
+      
       var zoomOutButton = document.createElement('div');
-      zoomOutButton.style.width = '32px'; 
-      zoomOutButton.style.height = '32px';
-      /* Change this to be the .png image you want to use */
-      zoomOutButton.style.backgroundImage = 'url("http://placehold.it/32/0000ff")';
+      zoomOutButton.className = "zoom-button zoom-out";
+      zoomOutButton.innerHTML = `<i class="fa fa-search-minus fa-2x" aria-hidden="true"></i>`;
       controlWrapper.appendChild(zoomOutButton);
     
       // Setup the click event listener - zoomIn
