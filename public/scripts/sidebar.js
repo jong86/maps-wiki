@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-pencil" aria-hidden="true"></i>
+    var sourceSidebar = `<li><i class="fa fa-heart liked" hidden="hidden"></i><i class="fa fa-pencil edited" hidden="hidden"></i>
     <a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
@@ -31,7 +31,6 @@ $(function() {
 			method: 'GET',
 			url: '/maps'
 		}).done(function (maps) {
-            console.log(maps);
             var data = maps;
 			$('.map-list').empty();
 			maps.forEach(function(data){
@@ -51,4 +50,22 @@ $(function() {
         createMap();
     })
 
+        // if (document.cookie) {
+        //     $.ajax({
+        // 		method: 'GET',
+        //         url: `/profiles/${user_id}`,
+        // 	}).then(function (maps) {
+        //         maps.forEach(function(item) {
+        //             $(".liked").show();
+        //             $(".edited").show();
+        //             if (favouite === true){
+        //                 $(".liked").css("color", "red");
+        //             }
+        //             if (changed === true){
+        //                 $(".edited").css("color", "green");
+        //             }
+                    
+
+
+    
 })
