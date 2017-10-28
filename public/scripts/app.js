@@ -236,8 +236,6 @@ function initMap() {
       var iconPath = "icons/";
       var types = ["food.png", "cafe.png", "bar.png", "view.png", "misc.png"];
 
-      console.log(data.title);
-
       var marker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
@@ -361,19 +359,20 @@ function initMap() {
     // User login panel functions:
 
     //login 
-    $('.login-form').on('submit', function(event) {
-      var emailLength = $(".email-field").val().length;
-      var passwordLength = $(".password-field").val().length;
+    $('.login-button').on('click', function(event) {
+      // var emailLength = $(".email-field").val().length;
+      // var passwordLength = $(".password-field").val().length;
       event.preventDefault();
-      if ((emailLength || passwordLength) <= 0) {
-        alert("You can't leave it blank!")
-        return;
-      }
-      var form = this;
-      $.ajax({
-        method: 'POST',
-        url: '/login',
+      // if ((emailLength || passwordLength) <= 0) {
+        // alert("You can't leave it blank!")
+        // return;
+        // }
+        // var form = this;
+        $.ajax({
+          method: 'POST',
+          url: `/login/${$(this).data("id")}`,
           success: function(response){
+            console.log(response);
             $(".dropdown").hide();
             $("#logout-button").show()
             loadMap(currentMapID);
@@ -382,7 +381,8 @@ function initMap() {
       });
       
       //logout
-      $('#logout-button').click(function(event) {
+      $('#logout-button').on("click", function(event) {
+        event.preventDefault();
         $.ajax({
           method: 'DELETE',
           url: '/login',
