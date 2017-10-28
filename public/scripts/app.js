@@ -351,11 +351,10 @@ function initMap() {
     //
     // User login panel functions:
 
-    //login 
+    // Login 
     $('.login-button').on('click', function(event) {
       // var emailLength = $(".email-field").val().length;
       // var passwordLength = $(".password-field").val().length;
-      event.preventDefault();
       // if ((emailLength || passwordLength) <= 0) {
         // alert("You can't leave it blank!")
         // return;
@@ -364,30 +363,35 @@ function initMap() {
         $.ajax({
           method: 'POST',
           url: `/login/${$(this).data("id")}`,
-          success: function(response){
+        }).then(function(response){
             console.log(response);
             $(".dropdown").hide();
             $("#logout-button").show()
             loadMap(currentMapID);
-          }
         });
       });
       
-      //logout
+      // Logout
       $('#logout-button').on("click", function(event) {
-        event.preventDefault();
         $.ajax({
           method: 'DELETE',
           url: '/login',
-          success: function(response){
+        }).then(function(){
             $("#logout-button").hide();
             $(".dropdown").show();
             // This line clears all browser cookies:
             document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
             loadMap(currentMapID);
-          }
         });
-      })
+      });
+
+
+      //
+      // Create map button
+      $("button.create-map-btn").on("click", function(event) {
+
+      });
+
         
   });
 }
