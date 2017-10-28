@@ -190,15 +190,28 @@ function initMap() {
       var data = $(this).parent().serialize() + "&" + $.param(extraData);
       console.log("I send: ", data);
       $.ajax({
-        method:"PUT",
+        method: "PUT",
         url: `pins/${pin_id}`,
         data: data
       }).then(function(results) {
+        console.log("Previous pin object:", currentMarkers[pin_id]);
+        results.id = pin_id;
+        results.type = currentMarkers[pin_id].icon.url;
+
         console.log("Edit complete:", results);
+
+        removePinFromClientMap(pin_id);
+        createMarker(results);
+        
         $(this).parent().parent().css("display", "none");
         $(this).parent().parent().prev().css("display", "inline");
       });
     });
+
+    function removePinFromClientMap(pin_id) {
+      currentMarkers[pin_id].setMap(null);
+      delete currentMarkers[pin_id];
+    }
     
     $(document).on("click", ".info-window .delete", function(event) {
       event.preventDefault();
@@ -224,20 +237,18 @@ function initMap() {
       var types = ["food.png", "cafe.png", "bar.png", "view.png", "misc.png"];
 
       console.log(data.title);
-      var labelText = (data.title === "") ? " " : data.title;
 
       var marker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
         title: data.description,
         label: {
-          text: labelText,
+          text: (data.title === "") ? " " : data.title,
           color: "rgb(107, 80, 80)"
         },
         icon: {
           url: data.type,
           labelOrigin: new google.maps.Point(12, 32),
-          fillColor: "red"
         },
         draggable: !!document.cookie,
       })
