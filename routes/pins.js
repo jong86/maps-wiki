@@ -54,6 +54,7 @@ module.exports = function (db) {
       res.send(401, 'Can\'t edit pin without logging in');
       return;
     }
+    const pinId = req.params.id
     const updatedPin = req.body;
     const pin = {
       latitude: updatedPin.latitude,
@@ -66,7 +67,13 @@ module.exports = function (db) {
       type_id: updatedPin.type_id,
       map_id: updatedPin.map_id
     };
-    res.json(pin);
+
+    db.updatePinByPinId(pinId, pin, function (err) {
+      if (err) {
+        console.log(err);
+      }
+      res.json(pin);
+    });
   });
 
   pinRoutes.delete('/:id', function (req, res) {
@@ -75,7 +82,11 @@ module.exports = function (db) {
       return;
     }
     const pinId = req.params.id;
-    //  delete pin if user is authorized
+    db.deletePinByPinId(pinId, function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
     res.send(200, 'deleted');
   });
 
