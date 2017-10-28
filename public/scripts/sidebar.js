@@ -1,4 +1,5 @@
 $(function() {
+
     $(".sidebar-toggle").click(function() {
       $(".sidebar-nav").animate({width: 'toggle'});
       $(this).toggleClass('.clicked');
@@ -20,4 +21,28 @@ $(function() {
           $('.map-list').find("li").slideDown();
         }
     })
+
+    var sourceSidebar = `<li><a class="mapListItem" data-id="{{id}}" heref="#">{{name}}</a></li>`;
+    var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
+    
+    function getListOfMaps() {
+		$.ajax({
+			method: 'GET',
+			url: '/maps'
+		}).done(function (maps) {
+            console.log(maps);
+            var data = maps;
+			$('.map-list').empty();
+			maps.forEach(function(data){
+                var result= compiledSidebarTemplate(data);
+                $('.map-list').append(result);
+			})
+        })   
+    }
+    getListOfMaps();
+
+    $(document).on("click", ".mapListItem", function (event) {
+        loadMap();
+    })
+
 })
