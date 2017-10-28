@@ -56,7 +56,7 @@ function initMap() {
       })
       
 
-      var QueryStringToHash = function QueryStringToHash (query) { // Turns serialized data into object
+      var QueryStringToHash = function QueryStringToHash(query) { // Turns serialized data into object
         var query_string = {};
         var vars = query.split("&");
         for (var i=0;i<vars.length;i++) {
@@ -84,6 +84,10 @@ function initMap() {
         bar: 2,
         view: 3,
         misc: 4
+      }
+
+      function returnsTypeID(icon) {
+        if (icon === "") { return; }
       }
 
       $("#new-marker-form").on("submit", function(event) { // Submits new marker form
@@ -193,7 +197,7 @@ function initMap() {
       $(document).on("click", ".info-window .save", function(event) { // For updating pin values
         event.preventDefault();
         var pin_id = $(this).parent().parent().parent().data("pin_id");
-        console.log(currentMarkers);
+        console.log(currentMarkers[pin_id]);
         var extraData = {
           latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
           longitude: currentMarkers[pin_id].position.lng, // need to update
@@ -245,15 +249,18 @@ function initMap() {
           icon: iconPath + types[Number(data.type_id)]
         })
         marker.addListener("dragend", function(event) {
-          mapPos = event.latLng;
-          data = {
-            latitude: mapPos.lat,
-            longitude: mapPos.lng
-          };
-          console.log("drag ended for pin:", data);
+          // mapPos = event.latLng;
+          // data = {
+          //   latitude: mapPos.lat,
+          //   longitude: mapPos.lng
+          // };
+          data.latitude = event.latLng.lat;
+          data.longitude = event.latLng.lng;
+
+          console.log("drag ended, data to be sent:", data);
           $.ajax({
             method:"PUT",
-            url: `pins/${pin_id}`,
+            url: `pins/${data.id}`,
             data: data
           }).then(function(results){
             console.log(results);
