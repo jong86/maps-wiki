@@ -42,13 +42,5 @@ $(function() {
     }
     getListOfMaps();
 
-    function createMap(){
-        $("#create-new-map").show().focus();
-    }
-    
-    $(".create-map-btn").click(function() {
-        console.log("hi");
-        createMap();
-    })
 
 })

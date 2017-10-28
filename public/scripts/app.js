@@ -376,7 +376,7 @@ function initMap() {
         $.ajax({
           method: 'DELETE',
           url: '/login',
-        }).then(function(){
+        }).then(function() {
             $("#logout-button").hide();
             $(".dropdown").show();
             // This line clears all browser cookies:
@@ -386,11 +386,28 @@ function initMap() {
       });
 
 
-      //
-      // Create map button
-      $("button.create-map-btn").on("click", function(event) {
 
-      });
+      //
+      // Creating new maps:
+      
+      // Create map toggle button:
+      $(".create-map-btn").click(function() {
+        $("#create-new-map").toggle().focus();
+      })
+
+      // Create map form
+      $("#create-new-map form").on("submit", function(event) {
+        event.preventDefault();
+        var name = $(this).children()[0].value;
+        console.log($(this).children()[0].value);
+        $.ajax({
+          method: "POST",
+          url: "/maps/",
+          data: { name: name }
+        }).then(function(response) {
+          console.log(response);
+        })
+      })
 
         
   });
