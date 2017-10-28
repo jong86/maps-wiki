@@ -23,6 +23,8 @@ function initMap() {
     var cm = document.getElementById("context-menu");
     var newMarkerMenu = document.getElementById("new-marker-menu");
     map.addListener("rightclick", function(event) { // Right-click context menu to create new marker
+      if (!document.cookie) return;
+
       mapPos = event.latLng;
       $(cm).css("left", event.pixel.x + "px");
       $(cm).css("top", event.pixel.y + $("#map").offset().top + "px");
@@ -188,15 +190,28 @@ function initMap() {
       var data = $(this).parent().serialize() + "&" + $.param(extraData);
       console.log("I send: ", data);
       $.ajax({
-        method:"PUT",
+        method: "PUT",
         url: `pins/${pin_id}`,
         data: data
       }).then(function(results) {
+        console.log("Previous pin object:", currentMarkers[pin_id]);
+        results.id = pin_id;
+        results.type = currentMarkers[pin_id].icon.url;
+
         console.log("Edit complete:", results);
+
+        removePinFromClientMap(pin_id);
+        createMarker(results);
+        
         $(this).parent().parent().css("display", "none");
         $(this).parent().parent().prev().css("display", "inline");
       });
     });
+
+    function removePinFromClientMap(pin_id) {
+      currentMarkers[pin_id].setMap(null);
+      delete currentMarkers[pin_id];
+    }
     
     $(document).on("click", ".info-window .delete", function(event) {
       event.preventDefault();
@@ -221,41 +236,31 @@ function initMap() {
       var iconPath = "icons/";
       var types = ["food.png", "cafe.png", "bar.png", "view.png", "misc.png"];
 
-      console.log(data.title);
-      var labelText = (data.title === "") ? " " : data.title;
-
       var marker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
         title: data.description,
         label: {
-          text: labelText,
+          text: (data.title === "") ? " " : data.title,
           color: "rgb(107, 80, 80)"
         },
         icon: {
           url: data.type,
           labelOrigin: new google.maps.Point(12, 32),
-          fillColor: "red"
         },
-        draggable: true,
+        draggable: !!document.cookie,
       })
+
       marker.addListener("dragend", function(event) {
-        // mapPos = event.latLng;
-        // data = {
-        //   latitude: mapPos.lat,
-        //   longitude: mapPos.lng
-        // };
         data.latitude = event.latLng.lat;
         data.longitude = event.latLng.lng;
 
-        console.log("drag ended, data to be sent:", data);
         $.ajax({
           method:"PUT",
           url: `pins/${data.id}`,
           data: data
-        }).then(function(results){
-          console.log(results);
         })
+        
       });
       marker.addListener("click", function() {
         infoWindow.open(map, marker);
@@ -341,7 +346,49 @@ function initMap() {
     zoomControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
 
+
+
+    //
+    // User login panel functions:
+
+    //login 
+    $('.login-button').on('click', function(event) {
+      // var emailLength = $(".email-field").val().length;
+      // var passwordLength = $(".password-field").val().length;
+      event.preventDefault();
+      // if ((emailLength || passwordLength) <= 0) {
+        // alert("You can't leave it blank!")
+        // return;
+        // }
+        // var form = this;
+        $.ajax({
+          method: 'POST',
+          url: `/login/${$(this).data("id")}`,
+          success: function(response){
+            console.log(response);
+            $(".dropdown").hide();
+            $("#logout-button").show()
+            loadMap(currentMapID);
+          }
+        });
+      });
       
+      //logout
+      $('#logout-button').on("click", function(event) {
+        event.preventDefault();
+        $.ajax({
+          method: 'DELETE',
+          url: '/login',
+          success: function(response){
+            $("#logout-button").hide();
+            $(".dropdown").show();
+            // This line clears all browser cookies:
+            document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            loadMap(currentMapID);
+          }
+        });
+      })
+        
   });
 }
   

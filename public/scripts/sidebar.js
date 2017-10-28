@@ -22,7 +22,8 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><a class="mapListItem" data-id="{{id}}" heref="#">{{name}}</a></li>`;
+    var sourceSidebar = `<li><i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-pencil" aria-hidden="true"></i>
+    <a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -41,6 +42,13 @@ $(function() {
     }
     getListOfMaps();
 
-
+    function createMap(){
+        $("#create-new-map").show().focus();
+    }
+    
+    $(".create-map-btn").click(function() {
+        console.log("hi");
+        createMap();
+    })
 
 })
