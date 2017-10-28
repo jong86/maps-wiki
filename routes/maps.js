@@ -4,6 +4,16 @@ const express = require('express');
 const mapRoutes = express.Router();
 
 module.exports = function (db) {
+  
+  /**
+  * POST
+  * Get /maps/ returns a list of maps 
+  * If the user is logged in, it will also return their 
+  * @param {integer} map_id 
+  * @param {function} callback 
+  * @returns {object} Maps an array of all the maps
+  */
+  
   mapRoutes.get('/', function (req, res) {
     db.getMaps(function (maps, err) {
       if (err) {

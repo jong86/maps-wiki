@@ -1,23 +1,7 @@
 module.exports = knex => ({
 
-  /**
-  * DATABASE FUNCTION 
-  * getPinsByMapId gets a list of pins that are associated with a specific map.
-  * @function getPinsByMapId
-  * @param {integer} mapId 
-  * @param {function} callback 
-  * @returns {object} Pins = array of pins 
-  * @returns {err} if there is an error, err will be returned. 
-  */
-  getPinsByMapId: function (mapId, callback) {
-    const err = null;
-
-    knex('pins')
-      .where('map_id', mapId)
-      .then(function (rows) {
-        callback(rows, err);
-      });
-  },
+  
+  
   /**
   * DATABASE FUNCTION 
   * getPinByPinId gets an individual pin independent of whatever map it's on
@@ -129,6 +113,20 @@ module.exports = knex => ({
   },
 
   /**
+  * Get Maps Gets a list of all the maps in the system.
+  * @function getMapsByUserId
+  * @param {function} callback 
+  * @returns {object} maps = arry of maps
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  getMapsByUserId: function (userId, callback) {
+    const err = null;
+    knex('maps').then(function (rows) {
+      callback(rows, err);
+    });
+  },
+
+  /**
   * DATABASE FUNCTION 
   * getMapById returns a map for a given mapId
   * @function getMapById
@@ -216,6 +214,29 @@ module.exports = knex => ({
     const err = null;
     knex('users').then(function (users) {
       callback(users, err);
+    });
+  },
+
+  /**
+  * getProfileByUserId a list for each map of whether the user liked or changed that map. 
+  * @function getProfileByUserId
+  * @param {function} callback 
+  * @returns {object} the profile for a user which looks like.  {
+        "id": 1,
+        "user_id": 1,
+        "map_id": 1,
+        "favourite": true,
+        "changed": true
+    }
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  getProfileByUserId: function (userId, callback) {
+    const err = null;
+    knex('maps_users')
+    .select("map_id", "favourite", "changed")
+    .where('user_id', userId)
+    .then(function (rows) {
+      callback(rows, err);
     });
   }
 });
