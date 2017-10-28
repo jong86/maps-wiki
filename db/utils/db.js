@@ -1,29 +1,19 @@
 module.exports = knex => ({
-  /**
-  * Get Maps Gets a list of all the maps in the system regardless.
-  * @function getMaps
-  * @param {function} callback 
-  * @returns {object} maps = arry of maps
-  */
-  getMaps: function (callback) {
-    const err = null;
-    knex('maps').then(function (rows) {
-      callback(rows, err);
-    });
-  },
+
   /**
   * DATABASE FUNCTION 
   * getPinsByMapId gets a list of pins that are associated with a specific map.
   * @function getPinsByMapId
-  * @param {integer} map_id 
+  * @param {integer} mapId 
   * @param {function} callback 
   * @returns {object} Pins = array of pins 
+  * @returns {err} if there is an error, err will be returned. 
   */
-  getPinsByMapId: function (map_id, callback) {
+  getPinsByMapId: function (mapId, callback) {
     const err = null;
 
     knex('pins')
-      .where('map_id', map_id)
+      .where('map_id', mapId)
       .then(function (rows) {
         callback(rows, err);
       });
@@ -32,9 +22,10 @@ module.exports = knex => ({
   * DATABASE FUNCTION 
   * getPinByPinId gets an individual pin independent of whatever map it's on
   * @function getPinByPinId
-  * @param {integer} pin_id - integer indicating the pin to find. 
+  * @param {integer} pinId - integer indicating the pin to find. 
   * @param {function} callback 
   * @returns {object} rowd[0] -  a single pin 
+  * @returns {err} if there is an error, err will be returned. 
   */
   getPinByPinId: function (pinId, callback) {
     const err = null;
@@ -45,12 +36,45 @@ module.exports = knex => ({
         callback(rows[0], err);
       });
   },
+
+  /**
+  * DATABASE FUNCTION 
+  * createPinByMapId returns pinId.
+  * @function createPinByMapId
+  * @param {integer} mapId - Identifies the map you want the pin to be added to
+  * @param {object} pin - pin object, id is ignored. 
+  * @param {function} callback 
+  * @returns {integer} id -is the id of the pin that was created.
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  createPinByMapId: function (mapId, pin, callback) {
+    const err = null;
+    // TODO currently hardcoded until finn gets data from jon. 
+    knex('pins')
+      .insert({
+        latitude: pin.latitude,
+        longitude: pin.longitude,
+        title: pin.title,
+        description: pin.description,
+        image: pin.image,
+        url: pin.url,
+        user_id: pin.user_id,
+        type: pin.type,
+        map_id: mapId
+      })
+      .returning('id')
+      .then(function (id) {
+        callback(id, err);
+      });
+  },
+
   /**
   * DATABASE FUNCTION 
   * updatePinByPinId updates the entire contents of a pin, searching on pinId
   * @function updatePinByPinId
   * @param {integer} pinId - integer indicating the pin to find. 
   * @param {function} callback 
+  * @returns {err} if there is an error, err will be returned. 
   */
   updatePinByPinId: function (pinId, pin, callback) {
     console.log('updatePinByPinId', pinId, pin);
@@ -66,7 +90,7 @@ module.exports = knex => ({
         url: pin.url,
         user_id: pin.user_id,
         type: pin.type,
-        map_id: pin.map_id
+        map_id: pin.mapId
       })
       .then(function () {
         callback(err);
@@ -78,6 +102,7 @@ module.exports = knex => ({
   * @function deletePinByPinId
   * @param {integer} pinId - integer indicating the pin to delete. 
   * @param {function} callback 
+  * @returns {err} if there is an error, err will be returned. 
   */
   deletePinByPinId: function (pinId, callback) {
     const err = null;
@@ -88,12 +113,28 @@ module.exports = knex => ({
         callback(rows[0], err);
       });
   },
+
+  /**
+  * Get Maps Gets a list of all the maps in the system.
+  * @function getMaps
+  * @param {function} callback 
+  * @returns {object} maps = arry of maps
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  getMaps: function (callback) {
+    const err = null;
+    knex('maps').then(function (rows) {
+      callback(rows, err);
+    });
+  },
+
   /**
   * DATABASE FUNCTION 
   * getMapById returns a map for a given mapId
   * @function getMapById
   * @param {integer} mapId - integer indicating the map to find. 
-  * @param {function} callback 
+  * @param {function} callback
+  * @returns {err} if there is an error, err will be returned. 
   */getMapById: function (mapId, callback) {
     const err = null;
     //
@@ -103,7 +144,15 @@ module.exports = knex => ({
         callback(rows[0], err);
       });
   },
-
+  /**
+  * DATABASE FUNCTION 
+  * createMap creates an idividial map.
+  * @function createMap
+  * @param {object} map - map object; includes name and user_id
+  * @param {function} callback 
+  * @returns {integer} id -is the id of the map that was created. 
+  * @returns {err} if there is an error, err will be returned. 
+  */
   createMap: function (map, callback) {
     const err = null;
     knex('maps')
@@ -116,11 +165,19 @@ module.exports = knex => ({
         callback(id, err);
       });
   },
-
-  updateMapByMapId: function (map_id, map, callback) {
+  /**
+  * DATABASE FUNCTION 
+  * updateMapbyMapId updates an idividial map from the database.
+  * @function updateMapbyMapId
+  * @param {integer} mapId - map id
+  * @param {object} map - map object; includes name and user_id
+  * @param {function} callback 
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  updateMapByMapId: function (mapId, map, callback) {
     const err = null;
     knex('maps')
-      .where('id', map_id)
+      .where('id', mapId)
       .update({
         name: map.name,
         user_id: map.user_id
@@ -130,10 +187,18 @@ module.exports = knex => ({
       });
   },
 
-  deleteMapByMapId: function (map_id, callback) {
+  /**
+  * DATABASE FUNCTION 
+  * deleteMapByMapId deletes an individual map from the database.
+  * @function deleteMapByMapId
+  * @param {integer} mapId - integer indicating the map to delete. 
+  * @param {function} callback 
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  deleteMapByMapId: function (mapId, callback) {
     const err = null;
     knex('maps')
-      .where('id', map_id)
+      .where('id', mapId)
       .del()
       .then(function (rows) {
         callback(err);
@@ -145,40 +210,12 @@ module.exports = knex => ({
   * @function getUsers
   * @param {function} callback 
   * @returns {object} Users = array of Users
+  * @returns {err} if there is an error, err will be returned. 
   */
   getUsers: function (callback) {
     const err = null;
     knex('users').then(function (users) {
       callback(users, err);
     });
-  },
-  /**
-  * DATABASE FUNCTION 
-  * createPinByMapId returns an array of all the users in system.
-  * @function createPinByMapId
-  * @param {integer} map_id - Identifies the map you want the pin to be added to
-  * @param {object} pin - pin object, id is ignored. 
-  * @param {function} callback 
-  * @returns {integer} id -is the id of the pin that was created. 
-  */
-  createPinByMapId: function (map_id, pin, callback) {
-    const err = null;
-    // TODO currently hardcoded until finn gets data from jon. 
-    knex('pins')
-      .insert({
-        latitude: pin.latitude,
-        longitude: pin.longitude,
-        title: pin.title,
-        description: pin.description,
-        image: pin.image,
-        url: pin.url,
-        user_id: pin.user_id,
-        type: pin.type,
-        map_id: map_id
-      })
-      .returning('id')
-      .then(function (id) {
-        callback(id, err);
-      });
   }
 });
