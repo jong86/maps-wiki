@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><a href="#">{{name}}</a></li>`;
+    var sourceSidebar = `<li><a class="mapListItem" data-id="{{id}}" heref="#">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -35,10 +35,14 @@ $(function() {
 			$('.map-list').empty();
 			maps.forEach(function(data){
                 var result= compiledSidebarTemplate(data);
-                $('.map-list').prepend(result);
+                $('.map-list').append(result);
 			})
         })   
     }
     getListOfMaps();
+
+    $(document).on("click", ".mapListItem", function (event) {
+        loadMap();
+    })
 
 })
