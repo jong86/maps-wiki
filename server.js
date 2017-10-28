@@ -21,6 +21,7 @@ const usersRoutes = require('./routes/users');
 const mapRoutes = require('./routes/maps');
 const pinRoutes = require('./routes/pins');
 const loginRoutes = require('./routes/login');
+const profileRoutes = require('./routes/profiles');
 // const db = require('./db/util/db');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -33,7 +34,8 @@ app.use(knexLogger(knex));
 app.use(cookieSession({
   name: 'session',
   keys: ['put this in .env', 'key'],
-  maxAge: 24 * 60 * 60 * 1000
+  maxAge: 24 * 60 * 60 * 1000,
+  httpOnly: false
 }));
 
 app.set('view engine', 'ejs');
@@ -54,6 +56,7 @@ const db = require('./db/utils/db.js')(knex);
 app.use('/users', usersRoutes(db));
 app.use('/maps', mapRoutes(db));
 app.use('/pins', pinRoutes(db));
+app.use('/profiles', profileRoutes(db));
 app.use('/login', loginRoutes());
 
 // Home page

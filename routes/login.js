@@ -5,9 +5,9 @@ const loginRoutes = express.Router();
 // const db = require('../db/utils/db');
 
 module.exports = function () {
-  loginRoutes.post('/', function (req, res) {
-    req.session.user_id = '0';
-    res.send('logged in');
+  loginRoutes.post('/:id', function (req, res) {
+    req.session.user_id = req.params.id;
+    res.send(`logged in as user ${req.params.id}`);
   });
 
   loginRoutes.delete('/', function (req, res) {

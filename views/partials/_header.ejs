@@ -14,19 +14,17 @@
         </ul>
         <ul class="navbar-top-links navbar-right">
             <li>
-                <button action"logout" method="delete" id="logout-button" class="btn btn-primary btn-block">Log out</button>
+                <button id="logout-button" class="btn btn-primary btn-block">Log out</button>
             </li>  
             <li>
-                <form class="login-form" role="form" method="post" action="login">
-                    <ul class="users">
-                        <li>
-                            <button type="submit" id="login-button" class="btn btn-primary btn-block">USER 1</button>
-                        </li>
-                        <li>
-                            <button type="submit" id="login-button" class="btn btn-primary btn-block">USER 2</button>
-                        </li>
-                    </ul>
-                </form>
+                <ul class="users">
+                    <li>
+                        <button data-id="0" class="btn btn-primary btn-block login-button">USER 1</button>
+                    </li>
+                    <li>
+                        <button data-id="1" class="btn btn-primary btn-block login-button">USER 2</button>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
