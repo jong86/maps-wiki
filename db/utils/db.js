@@ -132,7 +132,12 @@ module.exports = knex => ({
 
   deleteMapByMapId: function (map_id, callback) {
     const err = null;
-  
+    knex('maps')
+      .where('id', map_id)
+      .del()
+      .then(function (rows) {
+        callback(err);
+      });
   },
 
   /**

@@ -74,13 +74,17 @@ module.exports = function (db) {
   });
 
   mapRoutes.delete('/:id', function (req, res) {
-    const mapId = req.params.id;
-    db.deleteMapById(mapId, function (err) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t delete map without logging in');
+      return;
+    }
+    const map_id = req.params.id;
+    db.deleteMapByMapId(map_id, function (err) {
       if (err) {
         console.log(err);
       }
-      res.send('deletes map if user is authorized');
     });
+    res.send(200, 'deleted');
   });
   return mapRoutes;
 };
