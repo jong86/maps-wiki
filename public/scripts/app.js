@@ -252,22 +252,15 @@ function initMap() {
       })
 
       marker.addListener("dragend", function(event) {
-        // mapPos = event.latLng;
-        // data = {
-        //   latitude: mapPos.lat,
-        //   longitude: mapPos.lng
-        // };
         data.latitude = event.latLng.lat;
         data.longitude = event.latLng.lng;
 
-        console.log("drag ended, data to be sent:", data);
         $.ajax({
           method:"PUT",
           url: `pins/${data.id}`,
           data: data
-        }).then(function(results){
-          console.log(results);
         })
+        
       });
       marker.addListener("click", function() {
         infoWindow.open(map, marker);
