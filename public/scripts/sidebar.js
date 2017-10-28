@@ -41,8 +41,6 @@ $(function() {
     }
     getListOfMaps();
 
-    $(document).on("click", ".mapListItem", function (event) {
-        loadMap($(this).data("id"));
-    })
+
 
 })

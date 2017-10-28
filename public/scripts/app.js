@@ -1,16 +1,8 @@
-currentMap = 0;
-
-
 function initMap() {
   
   $(function () {
     var infoWindowTemplate = $("#infowindow-template").html();
     var compiledInfoWindowTemplate = Handlebars.compile(infoWindowTemplate);
-  
-    // Handlebars.registerHelper('convertTime', function (timeStamp) {
-    //   return moment(timeStamp).fromNow();
-    // });
-
   
     var mapOptions = {
       zoom: 15,
@@ -22,8 +14,6 @@ function initMap() {
     var marker = new google.maps.Marker({
       map: map,
     });
-    
-
     
     var currentMarkers = {}; // Possibly to use for edit history
 
@@ -99,7 +89,7 @@ function initMap() {
         latitude: mapPos.lat,
         longitude: mapPos.lng,
         type: markerType,
-        map_id: currentMap
+        map_id: currentMapID
       };
       var data = $(this).serialize() + "&" + $.param(extraData);
       console.log("I send: ", data);
@@ -204,7 +194,7 @@ function initMap() {
         latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
         longitude: currentMarkers[pin_id].position.lng, // need to update
         type_id: currentMarkers[pin_id].type, // need to update
-        map_id: currentMap,
+        map_id: currentMapID,
         pin_id: pin_id
       };
       var data = $(this).parent().serialize() + "&" + $.param(extraData);
@@ -275,11 +265,11 @@ function initMap() {
     }
 
   
-
-    function retrievePins() { // Gets the pins for the current map
+    var currentMapID = 0;
+    function retrievePins(currentMapID) { // Gets the pins for the current map
       $.ajax({
         method:"GET",
-        url: `maps/${currentMap}/pins`
+        url: `maps/${currentMapID}/pins`
       }).then(function(results) {
         results.forEach(function(item) {
           createMarker(item);
@@ -288,11 +278,30 @@ function initMap() {
         console.log("Error loading pins.");
       });
     }
-    retrievePins();
+    
+    retrievePins(currentMapID);
+
+    //
+    // Side bar map list listener for each map item:
+    $(document).on("click", ".mapListItem", function (event) {
+      console.log($(this).data("id"))
+      loadMap($(this).data("id"));
+    })
+
+    function loadMap(mapID) {
+      console.log("Loading map with id:", mapID); 
+      dropAllPins();
+      currentMapID = mapID;
+      retrievePins(mapID);
+    }
+
+    function dropAllPins() {
+      for (pin in currentMarkers) {
+        currentMarkers[pin].setMap(null);
+      }
+    }
+
 
   });
 }
   
-// function loadMap(mapID) { 
-//   console.log("you called loadMap with mapID", mapID);
-// }

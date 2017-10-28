@@ -1,0 +1,38 @@
+<div id="new-marker-menu" class="noselect">
+  <form id="new-marker-form">
+      <ul>
+        <li>
+          <label for="title" class="noselect">Title:</label>
+          <input class="input-field" id="title" type="text" name="title" /><br />
+        </li>
+        <li>
+          <label for="description" class="noselect">Description:</label>
+          <input class="input-field" id="description" type="text" name="description" /><br />
+        </li>
+        <li>
+          <label for="image" class="noselect">Image:</label>
+          <input class="input-field" id="image" type="text" name="image" /><br />
+        </li>
+        <li>
+          <label for="url" class="noselect">URL:</label>
+          <input class="input-field" id="url" type="text" name="url" /><br />
+        </li>
+      </ul>
+    <input type="submit" id="save" value="save">
+    <button id="cancel">cancel</button>
+  </form>
+</div>
+
+<img id="crosshair" src="icons/crosshair.png" />
+<div id="context-menu" class="noselect">
+  <ul>
+    <li id="new-marker">New marker</li>
+    <li id="marker-type-options">
+      <div class="marker-select-button" data-markerType="food"><img src="icons/food.png" /></div>
+      <div class="marker-select-button" data-markerType="bar"><img src="icons/bar.png" /></div>
+      <div class="marker-select-button" data-markerType="cafe"><img src="icons/cafe.png" /></div>
+      <div class="marker-select-button" data-markerType="view"><img src="icons/view.png" /></div>
+      <div class="marker-select-button" data-markerType="misc"><img src="icons/misc.png" /></div>
+    </li>
+  </ul>
+</div>
