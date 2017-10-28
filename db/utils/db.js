@@ -1,6 +1,23 @@
 module.exports = knex => ({
 
-  
+  /**
+  * DATABASE FUNCTION 
+  * getPinsByMapId gets a list of pins that are associated with a specific map.
+  * @function getPinsByMapId
+  * @param {integer} mapId 
+  * @param {function} callback 
+  * @returns {object} Pins = array of pins 
+  * @returns {err} if there is an error, err will be returned. 
+  */
+  getPinsByMapId: function (mapId, callback) {
+    const err = null;
+
+    knex('pins')
+      .where('map_id', mapId)
+      .then(function (rows) {
+        callback(rows, err);
+      });
+  },
   
   /**
   * DATABASE FUNCTION 
