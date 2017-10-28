@@ -106,18 +106,25 @@ module.exports = knex => ({
 
   createMap: function (map, callback) {
     const err = null;
-    const mapId = 1;
-    callback(mapId, err);
+    knex('maps')
+      .insert({
+        name: map.name,
+        user_id: map.user_id
+      })
+      .returning('id')
+      .then(function (id) {
+        callback(id, err);
+      });
   },
 
-  updateMapById: function (map_id, map, callback) {
+  updateMapByMapId: function (map_id, map, callback) {
     const err = null;
-    callback(err);
+  
   },
 
-  deleteMapById: function (map_id, callback) {
+  deleteMapByMapId: function (map_id, callback) {
     const err = null;
-    callback(err);
+  
   },
 
   /**
