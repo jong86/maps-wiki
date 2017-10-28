@@ -7,7 +7,7 @@ function initMap() {
     var mapOptions = {
       zoom: 15,
       center: new google.maps.LatLng(49.2827, -123.1207),
-      // disableDefaultUI: true,
+      disableDefaultUI: true,
     };
     
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -48,7 +48,7 @@ function initMap() {
     })
     
 
-    var QueryStringToHash = function QueryStringToHash(query) { // Turns serialized data into object
+    var QueryStringToHash = function QueryStringToHash(query) { // Helper function to turn serialized data into object
       var query_string = {};
       var vars = query.split("&");
       for (var i=0;i<vars.length;i++) {
@@ -70,18 +70,6 @@ function initMap() {
       return query_string;
     };
     
-    var markerTypeList = {
-      food: 0,
-      cafe: 1,
-      bar: 2,
-      view: 3,
-      misc: 4
-    }
-
-    function returnsTypeID(icon) {
-      if (icon === "") { return; }
-    }
-
     $("#new-marker-form").on("submit", function(event) { // Submits new marker form
       event.preventDefault();
       $(newMarkerMenu).css("display", "none");
@@ -279,29 +267,82 @@ function initMap() {
       });
     }
     
-    retrievePins(currentMapID);
-
+    
     //
     // Side bar map list listener for each map item:
     $(document).on("click", ".mapListItem", function (event) {
-      console.log($(this).data("id"))
       loadMap($(this).data("id"));
     })
-
+    
     function loadMap(mapID) {
       console.log("Loading map with id:", mapID); 
-      dropAllPins();
-      currentMapID = mapID;
-      retrievePins(mapID);
-    }
-
-    function dropAllPins() {
       for (pin in currentMarkers) {
         currentMarkers[pin].setMap(null);
       }
+      currentMapID = mapID;
+      retrievePins(mapID);
+    }
+    
+    loadMap(currentMapID);
+    
+
+
+    //
+    // Custom map controls:
+    function ZoomControl(controlDiv, map) {
+      
+      // Creating divs & styles for custom zoom control
+      controlDiv.style.padding = '5px';
+    
+      // Set CSS for the control wrapper
+      var controlWrapper = document.createElement('div');
+      controlWrapper.style.backgroundColor = 'white';
+      controlWrapper.style.borderStyle = 'solid';
+      controlWrapper.style.borderColor = 'gray';
+      controlWrapper.style.borderWidth = '1px';
+      controlWrapper.style.cursor = 'pointer';
+      controlWrapper.style.textAlign = 'center';
+      controlWrapper.style.width = '32px'; 
+      controlWrapper.style.height = '64px';
+      controlDiv.appendChild(controlWrapper);
+      
+      // Set CSS for the zoomIn
+      var zoomInButton = document.createElement('div');
+      zoomInButton.style.width = '32px'; 
+      zoomInButton.style.height = '32px';
+      /* Change this to be the .png image you want to use */
+      zoomInButton.style.backgroundImage = 'url("http://placehold.it/32/00ff00")';
+      controlWrapper.appendChild(zoomInButton);
+        
+      // Set CSS for the zoomOut
+      var zoomOutButton = document.createElement('div');
+      zoomOutButton.style.width = '32px'; 
+      zoomOutButton.style.height = '32px';
+      /* Change this to be the .png image you want to use */
+      zoomOutButton.style.backgroundImage = 'url("http://placehold.it/32/0000ff")';
+      controlWrapper.appendChild(zoomOutButton);
+    
+      // Setup the click event listener - zoomIn
+      google.maps.event.addDomListener(zoomInButton, 'click', function() {
+        map.setZoom(map.getZoom() + 1);
+      });
+        
+      // Setup the click event listener - zoomOut
+      google.maps.event.addDomListener(zoomOutButton, 'click', function() {
+        map.setZoom(map.getZoom() - 1);
+      });  
+        
     }
 
+    // Create the DIV to hold the control and call the CenterControl()
+    // constructor passing in this DIV.
+    var zoomControlDiv = document.createElement('div');
+    var zoomControl = new ZoomControl(zoomControlDiv, map);
 
+    zoomControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
+
+      
   });
 }
   
