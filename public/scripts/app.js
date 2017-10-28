@@ -289,6 +289,10 @@ function initMap() {
       retrievePins();
 
 
+      function loadMap(mapID) { 
+        
+      }
+
     });
   }
   

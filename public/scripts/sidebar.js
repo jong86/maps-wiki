@@ -42,7 +42,7 @@ $(function() {
     getListOfMaps();
 
     $(document).on("click", ".mapListItem", function (event) {
-        loadMap();
+        loadMap($(this).data("id"));
     })
 
 })
