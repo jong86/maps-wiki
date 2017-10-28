@@ -119,7 +119,15 @@ module.exports = knex => ({
 
   updateMapByMapId: function (map_id, map, callback) {
     const err = null;
-  
+    knex('maps')
+      .where('id', map_id)
+      .update({
+        name: map.name,
+        user_id: map.user_id
+      })
+      .then(function () {
+        callback(err);
+      });
   },
 
   deleteMapByMapId: function (map_id, callback) {

@@ -42,7 +42,7 @@ module.exports = function (db) {
     const newMap = req.body;
     const map = {
       name: newMap.name,
-      user_id: newMap.user_id
+      user_id: req.session.user_id
     };
 
     db.createMap(map, function (map, err) {
@@ -54,18 +54,22 @@ module.exports = function (db) {
   });
 
   mapRoutes.put('/:id', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t edit map without logging in');
+      return;
+    }
+    const map_id = req.params.id;
+    const updatedMap = req.body;
     const map = {
-      id: 0,
-      name: 'Best cat cafes in Vancouver',
-      created_at: Date.now(),
-      user_id: 0
+      name: updatedMap.name,
+      user_id: req.session.user_id
     };
 
-    db.updateMapById(map.id, map, function (err) {
+    db.updateMapByMapId(map_id, map, function (err) {
       if (err) {
         console.log(err);
       }
-      res.send('edits map if user is authorized');
+      res.json(map);
     });
   });
 
