@@ -23,6 +23,8 @@ function initMap() {
     var cm = document.getElementById("context-menu");
     var newMarkerMenu = document.getElementById("new-marker-menu");
     map.addListener("rightclick", function(event) { // Right-click context menu to create new marker
+      if (!document.cookie) return;
+
       mapPos = event.latLng;
       $(cm).css("left", event.pixel.x + "px");
       $(cm).css("top", event.pixel.y + $("#map").offset().top + "px");
@@ -237,8 +239,9 @@ function initMap() {
           labelOrigin: new google.maps.Point(12, 32),
           fillColor: "red"
         },
-        draggable: true,
+        draggable: !!document.cookie,
       })
+
       marker.addListener("dragend", function(event) {
         // mapPos = event.latLng;
         // data = {
@@ -341,7 +344,47 @@ function initMap() {
     zoomControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
 
+
+
+    //
+    // User login panel functions:
+
+    //login 
+    $('.login-form').on('submit', function(event) {
+      var emailLength = $(".email-field").val().length;
+      var passwordLength = $(".password-field").val().length;
+      event.preventDefault();
+      if ((emailLength || passwordLength) <= 0) {
+        alert("You can't leave it blank!")
+        return;
+      }
+      var form = this;
+      $.ajax({
+        method: 'POST',
+        url: '/login',
+          success: function(response){
+            $(".dropdown").hide();
+            $("#logout-button").show()
+            loadMap(currentMapID);
+          }
+        });
+      });
       
+      //logout
+      $('#logout-button').click(function(event) {
+        $.ajax({
+          method: 'DELETE',
+          url: '/login',
+          success: function(response){
+            $("#logout-button").hide();
+            $(".dropdown").show();
+            // This line clears all browser cookies:
+            document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            loadMap(currentMapID);
+          }
+        });
+      })
+        
   });
 }
   
