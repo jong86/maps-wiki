@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><a class="mapListItem" data-id="{{id}}" heref="#">{{name}}</a></li>`;
+    var sourceSidebar = `<li><a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -40,9 +40,5 @@ $(function() {
         })   
     }
     getListOfMaps();
-
-    $(document).on("click", ".mapListItem", function (event) {
-        loadMap();
-    })
 
 })

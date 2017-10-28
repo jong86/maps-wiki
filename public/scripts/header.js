@@ -1,4 +1,15 @@
 $(function () {
+    //open login form
+    function openForm()
+    {
+         if ($("#login-dropdown").is(":hidden")){
+                  $("#login-dropdown").slideDown("slow");
+        }
+        else{
+            $("#login-dropdown").slideUp("slow");
+        }
+    }
+
     //login 
 	$('.login-form').on('submit', function (event) {
 		var emailLength = $(".email-field").val().length;

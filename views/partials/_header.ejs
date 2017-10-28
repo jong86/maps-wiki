@@ -9,6 +9,7 @@
                     <button class="btn btn-primary">Edit</button>
                     <button class="btn btn-primary">Create</button>
                     <button class="btn btn-primary">Delete</button>
+                    <button style="color:red" class="btn btn-primary fa fa-heart"></button>
                 </li>
             </ul>
             <ul class="navbar-top-links navbar-right">
@@ -16,10 +17,10 @@
                     <button action"logout" method="delete" id="logout-button" hidden="hidden" class="btn btn-primary btn-block">Log out</button>
                 </li>  
                 <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <a href="" onClick="openForm()">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-user">
+                <ul id="login-dropdown" class="dropdown-menu">
                         <li>
                             <form class="login-form" role="form" method="post" action="login">
                                 <div class="form-group">
