@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i class="fa fa-heart liked" hidden="hidden"></i><i class="fa fa-pencil edited" hidden="hidden"></i>
+    var sourceSidebar = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="liked{{id}}" class="fa fa-pencil changed"></i>
     <a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
@@ -36,6 +36,7 @@ $(function() {
 			maps.forEach(function(data){
                 var result= compiledSidebarTemplate(data);
                 $('.map-list').append(result);
+                getProfile();
 			})
         })   
     }
@@ -49,23 +50,25 @@ $(function() {
         console.log("hi");
         createMap();
     })
-
-        // if (document.cookie) {
-        //     $.ajax({
-        // 		method: 'GET',
-        //         url: `/profiles/${user_id}`,
-        // 	}).then(function (maps) {
-        //         maps.forEach(function(item) {
-        //             $(".liked").show();
-        //             $(".edited").show();
-        //             if (favouite === true){
-        //                 $(".liked").css("color", "red");
-        //             }
-        //             if (changed === true){
-        //                 $(".edited").css("color", "green");
-        //             }
-                    
-
-
+    function getProfile() {
+        if (document.cookie) {
+            $.ajax({
+                method: 'GET',
+                url: `/profiles`,
+            }).then(function (profile) {
+                console.log("")
+                $(".liked").show();
+                $(".changed").show();
+                profile.forEach(function (){
+                    if (favouite === true){
+                        $(`#liked${map_id}`).css("color", "red");
+                    }
+                    if (changed === true){
+                        $(`#changed${map_id}`).css("color", "green");
+                    }
+                })
+            })
+        }    
+    }
     
 })
