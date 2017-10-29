@@ -1,3 +1,5 @@
+currentMapID = 1;
+
 function initMap() {
   
   $(function () {
@@ -214,8 +216,6 @@ function initMap() {
     $(document).on("click", ".info-window .delete", function(event) {
       event.preventDefault();
       var pin_id = $(this).parent().parent().parent().parent().data("pin_id");
-      console.log("delete button clicked for", pin_id);
-      console.log("currentMarkers array:", currentMarkers);
       var data = {
         map_id: currentMapID
       };
@@ -224,7 +224,6 @@ function initMap() {
         url: `pins/${pin_id}`,
         data: data
       }).done(function(results){
-        console.log("Ajax done for DELETE");
         markMapAsChangedOnClientSide(data.map_id);
         removePinFromClientMap(pin_id);
       })
@@ -263,6 +262,7 @@ function initMap() {
           url: `pins/${data.id}`,
           data: data
         }).done(function(results) {
+          console.log(data);
           markMapAsChangedOnClientSide(data.map_id);
         });
         
@@ -274,13 +274,15 @@ function initMap() {
     }
     
     function markMapAsChangedOnClientSide(map_id) {
+      console.log("marking as changed for map:", map_id);
       $(`#changed${map_id}`).css("color", "orange");
     }
 
   
-    // var currentMapID = $(".map-list").find("*");
+    // var currentMapID = $(".map-list").children();
     // console.log("Current map id?", currentMapID);
-    var currentMapID = 64;
+
+
 
     function retrievePins(currentMapID) { // Gets the pins for the current map
       $.ajax({
@@ -299,7 +301,9 @@ function initMap() {
     //
     // Side bar map list listener for each map item:
     $(document).on("click", ".mapListItem", function (event) {
+      event.stopPropagation();
       var map_id = $(this).data("id");
+      console.log("map id you clicked:", map_id);
       loadMap(map_id);
       currentMapID = map_id;
     })
