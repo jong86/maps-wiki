@@ -11,7 +11,7 @@
 ### Your projects must use:
 
 - [X] ES6 for server-side (Node) code
-- [ ] ES5 for front-end code
+- [X] ES5 for front-end code
 - [X] Node
 - [X] Express
 - [X] RESTful routes
@@ -38,7 +38,7 @@ A web app that allows users to collaboratively create maps which list multiple "
 - [X] each point can have: a title, description, and image
 - [X] authenticated users can create maps
 - [X] authenticated users can modify maps (add, edit, remove points)
-- [ ] users can favourite a map
+- [X] users can favourite a map
 - [ ] users have profiles, indicating their favourite maps and maps they've contributed to
 - [X] use http://leafletjs.com/ or https://developers.google.com/maps/
 

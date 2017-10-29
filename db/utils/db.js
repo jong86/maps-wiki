@@ -67,6 +67,36 @@ module.exports = knex => ({
       .then(function (id) {
         callback(id, err);
       });
+
+    // knex('maps_users')
+    //   .where({
+    //     user_id: pin.user_id,
+    //     map_id: mapId
+    //   })
+    //   .first()
+    //   .then((maps_users) => {
+    //     if (maps_users) {
+    //       return knex('maps_users')
+    //         .where({
+    //           user_id: pin.user_id,
+    //           map_id: mapId
+    //         })
+    //         .update('changed', true)
+    //         .then(() => true);
+    //     } else {
+    //       return knex('maps_users')
+    //         .insert({
+    //           user_id: pin.user_id,
+    //           map_id: mapId,
+    //           changed: true,
+    //           favourite: false
+    //         })
+    //         .then(() => true);
+    //     }
+    //   });
+    //  check to see if (user_id, map_id) exists in maps_users
+    //  if it does exist set changed to true
+    //  if it does not exist (add user_id, map_id) 'favourite' to false and 'changed' to true
   },
 
   /**
@@ -177,22 +207,43 @@ module.exports = knex => ({
       })
       .returning('id')
       .then(function (id) {
-        callback(id, err);
+        callback(id[0], err);
       });
   },
-  createMapsUsersChanged: function (map_id, user_id, callback) {
+  updateMapsUsersChanged: function (map_id, user_id, value, callback) {
     const err = null;
     knex('maps_users')
-    .insert({
-      user_id: user_id,
-      map_id: map_id,
-      favourite: false,
-      changed: true
-    })
-    .returning('id')
-    .then((id) => {
-      callback(id, err);
-    })
+      .where({
+        user_id: user_id,
+        map_id: map_id
+      })
+      .first()
+      .then((maps_users) => {
+        if (maps_users) {
+          return knex('maps_users')
+            .where({
+              user_id: user_id,
+              map_id: map_id
+            })
+            .update('changed', value)
+            .returning('id')
+            .then((id) => {
+              callback(id, err);
+            });
+        } else {
+          return knex('maps_users')
+            .insert({
+              user_id: user_id,
+              map_id: map_id,
+              changed: value,
+              favourite: false
+            })
+            .returning('id')
+            .then((id) => {
+              callback(id, err);
+            });
+        }
+      });
   },
   /**
   * DATABASE FUNCTION 
