@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-pencil" aria-hidden="true"></i>
+    var sourceSidebar = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
     <a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
@@ -31,16 +31,64 @@ $(function() {
 			method: 'GET',
 			url: '/maps'
 		}).done(function (maps) {
-            console.log(maps);
             var data = maps;
 			$('.map-list').empty();
 			maps.forEach(function(data){
                 var result= compiledSidebarTemplate(data);
                 $('.map-list').append(result);
+                getProfile();
 			})
         })   
     }
     getListOfMaps();
 
+    function getProfile() {
+        if (document.cookie) {
+            $.ajax({
+                method: 'GET',
+                url: `/profiles/`,
+            }).then(function (profile) {
+                console.log(profile);
+                $(".liked").show();
+                $(".changed").show();
+                profile.forEach(function (item){
+                    if (item.favourite === true){
+                        $(`#liked${item.map_id}`).css("color", "red");
+                    } else {
+                        $(`#liked${item.map_id}`).css("color", "");
+                    }
+                    if (item.changed === true){
+                        $(`#changed${item.map_id}`).css("color", "orange");
+                    }
+                })
+            })
+        }    
+    }
+    
+    $(document).on("click", ".liked", function() {
+        var id = $(this)[0].id.slice(5);
+        console.log(id);
+        $.ajax({
+            method: 'POST',
+            url: `/favourites/${id}`,
+        }).done(function(response) {
+            console.log("here",response);
+            if (response == true){
+                $(`#liked${id}`).css("color", "red");
+            } else {
+                $(`#liked${id}`).css("color", "");
+            }
+        })
+    })
 
+    $('.form-control').change( function () {
+        var filter = $(this).val();
+        console.log(filter)
+        if (filter) {
+          $('.map-list').find("a:not(:contains(" + filter + "))").parent().slideUp();
+          $('.map-list').find("a:contains(" + filter + ")").parent().slideDown();
+        } else {
+          $('.map-list').find("li").slideDown();
+        }
+    })
 })
