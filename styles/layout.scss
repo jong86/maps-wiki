@@ -30,11 +30,11 @@ img {
 
 
 @media(min-width:768px) {
-    #page-wrapper {
+    #wrapper {
         position: inherit;
-        margin: 0 0 0 250px;
-        padding: 0 30px;
-        border-left: 1px solid darken(grey, 6.5%);
+        width: 100%;
+        margin:0;
+        opacity: 0.9;
     }
 }
 

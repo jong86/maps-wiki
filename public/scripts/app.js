@@ -379,7 +379,8 @@ function initMap() {
           url: `/login/${$(this).data("id")}`,
         }).done(function(response){
             console.log(response);
-            $(".dropdown").hide();
+            $("#username").show();
+            $(".users").hide();
             $("#logout-button").show()
             loadMap(currentMapID);
         });
@@ -392,7 +393,8 @@ function initMap() {
           url: '/login',
         }).done(function() {
             $("#logout-button").hide();
-            $(".dropdown").show();
+            $("#username").hide();
+            $(".users").show();
             // This line clears all browser cookies:
             document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
             loadMap(currentMapID);
