@@ -63,4 +63,20 @@ $(function() {
         }    
     }
     
+    function favoriteMap () {
+
+    }
+
+    $(document).on("click", ".liked", function() {
+        var id = $(this)[0].id.slice(5);
+        console.log(id);
+        $.ajax({
+            method: 'POST',
+            url: `/favourites/${id}`,
+        }).done(function(response) {
+            console.log(response);
+        })
+    })
+
+   
 })
