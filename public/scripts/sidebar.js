@@ -54,6 +54,8 @@ $(function() {
                 profile.forEach(function (item){
                     if (item.favourite === true){
                         $(`#liked${item.map_id}`).css("color", "red");
+                    } else {
+                        $(`#liked${item.map_id}`).css("color", "");
                     }
                     if (item.changed === true){
                         $(`#changed${item.map_id}`).css("color", "orange");
@@ -63,10 +65,6 @@ $(function() {
         }    
     }
     
-    function favoriteMap () {
-
-    }
-
     $(document).on("click", ".liked", function() {
         var id = $(this)[0].id.slice(5);
         console.log(id);
@@ -74,9 +72,23 @@ $(function() {
             method: 'POST',
             url: `/favourites/${id}`,
         }).done(function(response) {
-            console.log(response);
+            console.log("here",response);
+            if (response == true){
+                $(`#liked${id}`).css("color", "red");
+            } else {
+                $(`#liked${id}`).css("color", "");
+            }
         })
     })
 
-   
+    $('.form-control').change( function () {
+        var filter = $(this).val();
+        console.log(filter)
+        if (filter) {
+          $('.map-list').find("a:not(:contains(" + filter + "))").parent().slideUp();
+          $('.map-list').find("a:contains(" + filter + ")").parent().slideDown();
+        } else {
+          $('.map-list').find("li").slideDown();
+        }
+    })
 })
