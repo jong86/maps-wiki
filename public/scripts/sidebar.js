@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
+    var sourceSidebar = `<li id="fav{{id}}"><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
     <a class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
@@ -75,20 +75,13 @@ $(function() {
             console.log("here",response);
             if (response == true){
                 $(`#liked${id}`).css("color", "red");
+                $(`#fav${id}`).addClass("fav");
             } else {
                 $(`#liked${id}`).css("color", "");
+                $(`#fav${id}`).removeClass("fav");
             }
         })
     })
 
-    $('.form-control').change( function () {
-        var filter = $(this).val();
-        console.log(filter)
-        if (filter) {
-          $('.map-list').find("a:not(:contains(" + filter + "))").parent().slideUp();
-          $('.map-list').find("a:contains(" + filter + ")").parent().slideDown();
-        } else {
-          $('.map-list').find("li").slideDown();
-        }
-    })
+   
 })
