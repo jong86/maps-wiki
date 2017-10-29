@@ -4,7 +4,6 @@ const express = require('express');
 const mapRoutes = express.Router();
 
 module.exports = function (db) {
-  
   /**
   * POST
   * Get /maps/ returns a list of maps 
@@ -13,7 +12,7 @@ module.exports = function (db) {
   * @param {function} callback 
   * @returns {object} Maps an array of all the maps
   */
-  
+
   mapRoutes.get('/', function (req, res) {
     db.getMaps(function (maps, err) {
       if (err) {
@@ -59,11 +58,9 @@ module.exports = function (db) {
       if (err) {
         console.log(err);
       }
-      console.log("adding to maps_users:", map_id, req.session.user_id);
-      db.createMapsUsersChanged(map_id[0], req.session.user_id, function(id, err) {
+      db.updateMapsUsersChanged(map_id, req.session.user_id, true, function (id, err) {
         res.json(map_id);
-      })
-
+      });
     });
   });
 
