@@ -261,8 +261,8 @@ module.exports = knex => ({
     const err = null;
     knex('maps_users')
       .where({
-        map_id: map.map_id,
-        user_id: 1
+        user_id: map.user_id,
+        map_id: map.map_id
       })
       .first()
       .then((map) => {
