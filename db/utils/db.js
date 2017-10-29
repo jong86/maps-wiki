@@ -18,7 +18,7 @@ module.exports = knex => ({
         callback(rows, err);
       });
   },
-  
+
   /**
   * DATABASE FUNCTION 
   * getPinByPinId gets an individual pin independent of whatever map it's on
@@ -250,10 +250,40 @@ module.exports = knex => ({
   getProfileByUserId: function (userId, callback) {
     const err = null;
     knex('maps_users')
-    .select("map_id", "favourite", "changed")
-    .where('user_id', userId)
-    .then(function (rows) {
-      callback(rows, err);
-    });
+      .select('map_id', 'favourite', 'changed')
+      .where('user_id', userId)
+      .then(function (rows) {
+        callback(rows, err);
+      });
+  },
+
+  favouriteMapByMapId: function (map, callback) {
+    const err = null;
+    knex('maps_users')
+      .where({
+        map_id: map.map_id,
+        user_id: 1
+      })
+      .first()
+      .then((map) => {
+        if (!map.favourite) {
+          return knex('maps_users')
+            .where({
+              map_id: map.map_id,
+              user_id: map.user_id
+            })
+            .update('favourite', true)
+            .then(() => true);
+        } else {
+          return knex('maps_users')
+            .where({
+              map_id: map.map_id,
+              user_id: map.user_id
+            })
+            .update('favourite', false)
+            .then(() => false);
+        }
+      })
+      .then(callback);
   }
 });
