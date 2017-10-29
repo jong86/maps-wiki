@@ -43,7 +43,9 @@ module.exports = function (db) {
         console.log(err);
       }
       console.log('pinId: ', pinId);
-      res.json(pinId);
+      db.updateMapsUsersChanged(pin.map_id, req.session.user_id, true, function (id, err) {
+        res.json(pinId);
+      });
     });
   });
 
@@ -70,7 +72,9 @@ module.exports = function (db) {
       if (err) {
         console.log(err);
       }
-      res.json(pin);
+      db.updateMapsUsersChanged(pin.map_id, req.session.user_id, true, function (id, err) {
+        res.json(pin);
+      });
     });
   });
 
@@ -84,8 +88,10 @@ module.exports = function (db) {
       if (err) {
         console.log(err);
       }
+      db.updateMapsUsersChanged(req.body.map_id, req.session.user_id, true, function (id, err) {
+        res.send(200, 'deleted');
+      });
     });
-    res.send(200, 'deleted');
   });
 
   return pinRoutes;

@@ -80,7 +80,9 @@ module.exports = function (db) {
       if (err) {
         console.log(err);
       }
-      res.json(map);
+      db.updateMapsUsersChanged(map_id, req.session.user_id, true, function (id, err) {
+        res.json(map_id);
+      });
     });
   });
 
