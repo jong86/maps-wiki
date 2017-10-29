@@ -180,6 +180,20 @@ module.exports = knex => ({
         callback(id, err);
       });
   },
+  createMapsUsersChanged: function (map_id, user_id, callback) {
+    const err = null;
+    knex('maps_users')
+    .insert({
+      user_id: user_id,
+      map_id: map_id,
+      favourite: false,
+      changed: true
+    })
+    .returning('id')
+    .then((id) => {
+      callback(id, err);
+    })
+  },
   /**
   * DATABASE FUNCTION 
   * updateMapbyMapId updates an idividial map from the database.

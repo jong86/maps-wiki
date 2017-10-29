@@ -6,7 +6,6 @@ exports.seed = function(knex, Promise) {
       return Promise.all([
         // Inserts seed entries
         knex('maps_users').insert({
-          id: 1,
           user_id: 1,
           map_id: 1,
           favourite : true,
