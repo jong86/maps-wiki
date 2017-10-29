@@ -92,8 +92,9 @@ function initMap() {
         data: data
       }).done(function(results) {
         var newMarkerObj = QueryStringToHash(data); 
-        newMarkerObj.id = results[0]; 
-        console.log("new marker from server:", newMarkerObj);
+        newMarkerObj.id = results[0];
+        console.log("extraData.map_id", extraData.map_id);
+        markMapAsChangedOnClientSide(extraData.map_id);
         createMarker(newMarkerObj);
         $(crosshair).css("display", "none");
       });
@@ -301,6 +302,7 @@ function initMap() {
     //
     // Side bar map list listener for each map item:
     $(document).on("click", ".mapListItem", function (event) {
+      event.preventDefault();
       event.stopPropagation();
       var map_id = $(this).data("id");
       console.log("map id you clicked:", map_id);
