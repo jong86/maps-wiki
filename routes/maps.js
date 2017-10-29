@@ -55,11 +55,15 @@ module.exports = function (db) {
       user_id: req.session.user_id
     };
 
-    db.createMap(map, function (map, err) {
+    db.createMap(map, function (map_id, err) {
       if (err) {
         console.log(err);
       }
-      res.json(map);
+      console.log("adding to maps_users:", map_id, req.session.user_id);
+      db.createMapsUsersChanged(map_id[0], req.session.user_id, function(id, err) {
+        res.json(map_id);
+      })
+
     });
   });
 
