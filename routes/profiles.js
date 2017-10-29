@@ -7,8 +7,12 @@ module.exports = function (db) {
   
   
 
-  profileRoutes.get('/:id', function (req, res) {
-    const userId = req.params.id;
+  profileRoutes.get('/', function (req, res) {
+    if (!req.session.user_id) {
+      res.send(401, 'Can\'t get user profile without logging in');
+      return;
+    }
+    const userId = req.session.user_id;
     db.getProfileByUserId(userId, function (profile, err) {
       if (err) {
         console.log(err);
