@@ -22,6 +22,7 @@ const mapRoutes = require('./routes/maps');
 const pinRoutes = require('./routes/pins');
 const loginRoutes = require('./routes/login');
 const profileRoutes = require('./routes/profiles');
+const favouriteRoutes = require('./routes/favourites');
 // const db = require('./db/util/db');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -58,6 +59,7 @@ app.use('/maps', mapRoutes(db));
 app.use('/pins', pinRoutes(db));
 app.use('/profiles', profileRoutes(db));
 app.use('/login', loginRoutes());
+app.use('/favourites', favouriteRoutes(db));
 
 // Home page
 app.get('/', (req, res) => {
