@@ -109,7 +109,6 @@ img {
       padding-left: 37px;
     }
   }
-  
 }
 
 div .list {
@@ -171,6 +170,7 @@ div .list {
 .liked, .changed {
   padding:0px 10px;
   float: right;
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -193,4 +193,8 @@ div .list {
     -moz-box-shadow: inset 0px 3px 0px $button-color;
     box-shadow: inset 0px 3px 0px $button-color;
   }
+}
+
+.map-list-item {
+  cursor: pointer;
 }
