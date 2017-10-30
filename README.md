@@ -9,9 +9,7 @@ The functional requirements, and their status can be found [here](https://github
 Documentation can be found docs/index.html once you download the project. 
 
 ## Screen Shots
-![Entering a tweet.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_compose.png "Start.")
-![Compose form hidden.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_compose_hidden.png "Compose hidden")
-![Past tweets.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_tweet.png "Tweets.")
+![Main Screen](https://www.dropbox.com/s/r9f6nn8b2p9xyfl/screen_shot_main.png?dl=1 "Main")
 
 
 1. Create your own empty repo on GitHub
