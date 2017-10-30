@@ -412,8 +412,7 @@ function initMap() {
       //
       // Creating new maps:
       
-      var sourceSidebarNewMap = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
-      <a class="map-list-item" data-id="{{id}}" href="">{{name}}</a></li>`;
+      var sourceSidebarNewMap = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i></li>`;
       var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
 
       // Create map form
@@ -435,7 +434,7 @@ function initMap() {
           var newMapItem = compiledSidebarNewMapTemplate(data);
 
           // console.log($("ul.map-list"));
-          document.querySelector("ul.map-list").innerHTML += newMapItem;
+          document.querySelector("ul.map-list").innerHTML = newMapItem + document.querySelector("ul.map-list").innerHTML;
 
         })
       })

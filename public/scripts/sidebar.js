@@ -15,14 +15,14 @@ $(function() {
         var filter = $(this).val();
         console.log(filter)
         if (filter) {
-          $('.map-list').find("a:not(:contains(" + filter + "))").parent().slideUp();
-          $('.map-list').find("a:contains(" + filter + ")").parent().slideDown();
+          $('.map-list').find("span:not(:contains(" + filter + "))").parent().slideUp();
+          $('.map-list').find("span:contains(" + filter + ")").parent().slideDown();
         } else {
           $('.map-list').find("li").slideDown();
         }
     })
 
-    var sourceSidebar = `<li><a id="list{{id}}" class="map-list-item" data-id="{{id}}" heref="">{{name}}</a><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
+    var sourceSidebar = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}" heref="">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -34,7 +34,7 @@ $(function() {
 			$('.map-list').empty();
 			maps.forEach(function(data){
                 var result = compiledSidebarTemplate(data);
-                $('.map-list').append(result);
+                $('.map-list').prepend(result);
                 getProfile();
 			})
         })   
