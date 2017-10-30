@@ -434,7 +434,7 @@ function initMap() {
       //
       // Creating new maps:
       var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i>` : "";
-      var sourceSidebarNewMap = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
+      var sourceSidebarNewMap = `<li class="map-li noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
       var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
 
       // Create map form

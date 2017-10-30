@@ -23,7 +23,7 @@ $(function() {
     })
 
     var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>` : "";
-    var sourceSidebar = `<li class="noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
+    var sourceSidebar = `<li class="map-li noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
