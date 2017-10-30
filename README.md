@@ -1,5 +1,5 @@
 # Triki Maps  
-![Logo](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/triki-map-logo.png) "Logo")
+![Logo](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/triki-map-logo.png)
 
 Triki Maps is a web app that allows users to collaboratively create maps which list multiple "points", for example, "Best micro-breweries in Vancouver", or "Best hiking spots". 
 
