@@ -33,14 +33,14 @@ Documentation can be found docs/index.html once you download the project.
 
 ## Dependencies
 
--body-parser
--cookie-session
--dotenv
--ejs
--express
--jsdoc
--knex
--knex-logger
--morgan
--node-sass-middleware
--pg
+- body-parser
+- cookie-session
+- dotenv
+- ejs
+- express
+- jsdoc
+- knex
+- knex-logger
+- morgan
+- node-sass-middleware
+- pg
