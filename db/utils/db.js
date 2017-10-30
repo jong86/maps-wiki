@@ -344,7 +344,6 @@ module.exports = knex => ({
         }
       })
       .then((newRow) => {
-        console.log('it got here');
         if (!newRow.favourite) {
           return knex('maps_users')
             .where({
