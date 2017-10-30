@@ -6,6 +6,7 @@ All maps are visible whether you are authorized user or not. When a an authorize
 
 The functional requirements, and their status can be found [here](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/Functional%20Requirements.md). 
 
+Documentation can be found docs/index.html once you download the project. 
 
 ## Screen Shots
 ![Entering a tweet.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_compose.png "Start.")
