@@ -79,6 +79,7 @@ img {
   span {
     padding:20px;
     font-size: large;
+    color:$button-color 
   }
 }
 //sidebar
@@ -94,6 +95,7 @@ img {
   }
   ul li {
     a {
+      word-wrap: break-word;
       &.active {
           background-color: grey;
       }
@@ -160,6 +162,10 @@ img {
   }
 }
 
+.liked, .changed {
+  padding:0px 10px;
+  float: right;
+}
 
 .btn-primary {
   margin:10px 0px;

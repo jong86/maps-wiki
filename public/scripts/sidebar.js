@@ -22,8 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
-    <a id="list{{id}}" class="mapListItem" data-id="{{id}}" heref="">{{name}}</a></li>`;
+    var sourceSidebar = `<li><a id="list{{id}}" class="mapListItem" data-id="{{id}}" heref="">{{name}}</a><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
