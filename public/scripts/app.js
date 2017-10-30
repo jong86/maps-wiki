@@ -412,14 +412,8 @@ function initMap() {
       //
       // Creating new maps:
       
-      // Create map toggle button:
-      $(".create-map-btn").click(function() {
-        $("#create-new-map").toggle().focus();
-      })
-
-
       var sourceSidebarNewMap = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
-      <a class="mapListItem" data-id="{{id}}" href="">{{name}}</a></li>`;
+      <a class="map-list-item" data-id="{{id}}" href="">{{name}}</a></li>`;
       var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
 
       // Create map form
@@ -435,12 +429,14 @@ function initMap() {
           console.log(new_map_id);
 
           var data = {
-            id  = new_map_id,
-            name = name
-          }
+            id: new_map_id,
+            name: name
+          };
           var newMapItem = compiledSidebarNewMapTemplate(data);
 
-          $(".map-list").append(newMapItem);
+          // console.log($("ul.map-list"));
+          document.querySelector("ul.map-list").innerHTML += newMapItem;
+
         })
       })
 
