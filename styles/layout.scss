@@ -197,7 +197,15 @@ div .list {
 
 .map-list-item {
   cursor: pointer;
+  color: rgb(28, 26, 36);
+  font-weight: bold;
+
+  &:hover {
+    background-color: rgba(225, 225, 255, 0.781);
+    text-decoration: underline;
+  }
 }
+
 
 a {
   display: inline;

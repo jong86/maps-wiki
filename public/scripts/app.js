@@ -301,13 +301,15 @@ function initMap() {
     
     //
     // Side bar map list listener for each map item:
-    $(document).on("click", ".mapListItem", function (event) {
+    $(document).on("click", ".map-list-item", function (event) {
       event.preventDefault();
       event.stopPropagation();
       var map_id = $(this).data("id");
       console.log("map id you clicked:", map_id);
       loadMap(map_id);
       currentMapID = map_id;
+      var mapName = $(this).text();
+      $("#mapname").text(`You are looking at map ${mapName}.`);
     })
     
     function loadMap(mapID) {
@@ -433,7 +435,6 @@ function initMap() {
           };
           var newMapItem = compiledSidebarNewMapTemplate(data);
 
-          // console.log($("ul.map-list"));
           document.querySelector("ul.map-list").innerHTML = newMapItem + document.querySelector("ul.map-list").innerHTML;
 
         })

@@ -22,7 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}" heref="">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
+    var sourceSidebar = `<li class="noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -63,17 +63,7 @@ $(function() {
             })
         }    
     }
-    $(document).on("click", ".mapListItem", function() {
-        var id = $(this)[0].id.slice(4);
-        console.log(id);
-        $.ajax({
-            method: 'GET',
-            url: `/maps/${id}`,
-        }).done(function(map) {
-            $("#mapname").text(`You are looking at ${map.name}.`)
-        })
-    })
-    
+
     $(document).on("click", ".liked", function() {
         var id = $(this)[0].id.slice(5);
         $.ajax({
