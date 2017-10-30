@@ -330,8 +330,22 @@ module.exports = knex => ({
         map_id: map.map_id
       })
       .first()
-      .then((map) => {
-        if (!map.favourite) {
+      .then((row) => {
+        if (!row) {
+          return knex('maps_users')
+            .insert({
+              user_id: map.user_id,
+              map_id: map.map_id,
+              favourite: false,
+              changed: false
+            });
+        } else {
+          return row;
+        }
+      })
+      .then((newRow) => {
+        console.log('it got here');
+        if (!newRow.favourite) {
           return knex('maps_users')
             .where({
               map_id: map.map_id,
