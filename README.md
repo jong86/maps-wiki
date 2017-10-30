@@ -10,9 +10,9 @@ The functional requirements, and their status can be found [here](https://github
 Documentation can be found docs/index.html once you download the project. 
 
 ## Screen Shots
-![Main Screen.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20show%20marker.png) "Main")
-![Insert Marker.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20Insert%20Marker.png) "Insert")
-![Add new.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20Edit%20Marker.png) "Add")
+![Main Screen.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20show%20marker.png) Main
+![Insert Marker.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20Insert%20Marker.png) Insert
+![Add new.](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/TrikiMaps%20Edit%20Marker.png) Add
 
 
 
