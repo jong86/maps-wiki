@@ -1,7 +1,7 @@
 $(function() {
 
     $(".sidebar-toggle").click(function() {
-      $(".sidebar-nav").animate({width: 'toggle'});
+      $("#the-sidebar").toggle("slide");
       $(this).toggleClass('.clicked');
       var button = $(this);
       if(button.hasClass('.clicked')){
@@ -22,7 +22,8 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li class="noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
+    var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>` : "";
+    var sourceSidebar = `<li class="noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -47,7 +48,6 @@ $(function() {
                 method: 'GET',
                 url: `/profiles/`,
             }).then(function (profile) {
-                console.log(profile);
                 $(".liked").show();
                 $(".changed").show();
                 profile.forEach(function (item){

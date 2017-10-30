@@ -298,7 +298,13 @@ function initMap() {
       });
     }
     
-    
+
+    // $(document).on("load", "sidebar ul.map-list", function(){ 
+    //   var mapName = $(this).last();
+    //   console.log(mapName);
+    //   $("#mapname").text(`You are looking at map ${mapName}.`); // sets initial map name displayed based
+    // })
+
     //
     // Side bar map list listener for each map item:
     $(document).on("click", ".map-list-item", function (event) {
@@ -308,9 +314,11 @@ function initMap() {
       console.log("map id you clicked:", map_id);
       loadMap(map_id);
       currentMapID = map_id;
-      var mapName = $(this).text();
+      mapName = $(this).text();
       $("#mapname").text(`You are looking at map ${mapName}.`);
     })
+
+    
     
     function loadMap(mapID) {
       console.log("Loading map with id:", mapID); 
@@ -405,14 +413,19 @@ function initMap() {
         });
       });
 
-      // Login/logout button hiding depending on cookie on page refresh
-      if (document.cookie) {
-        $(".login-button").hide();
-        $("#logout-button").show();
-      } else {
-        $("#logout-button").hide();
-        $(".login-button").show();
+      // Hiding/showing of stuff depending on cookie after page refresh
+      function refreshGuiForCookie() {
+        if (document.cookie) {
+          $(".login-button").hide();
+          
+          $("#logout-button").show();
+        } else {
+          $("#logout-button").hide();
+          
+          $(".login-button").show();
+        }
       }
+      refreshGuiForCookie()
 
 
 
@@ -420,8 +433,8 @@ function initMap() {
 
       //
       // Creating new maps:
-      
-      var sourceSidebarNewMap = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i></li>`;
+      var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i>` : "";
+      var sourceSidebarNewMap = `<li><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
       var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
 
       // Create map form
@@ -446,8 +459,6 @@ function initMap() {
 
         })
       })
-
-        
   });
 }
   
