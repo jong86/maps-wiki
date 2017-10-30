@@ -1,29 +1,24 @@
 <div class="navbar-default sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li class="sidebar-search">
-                <div class="input-group custom-search-form">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </li>
-            <li id="create-new-map" style="display: none;">
-                <form method="POST" action="maps">
-                    <input class="form-control" type="text">
-                    <input type="submit" value="create map">
-                </form>
-            </li>
-            <li class="favorite-list">
-                <a id="my-favorite" href=""><i class="fa fa-heart"></i> My Favorites </a>
-            </li>
-            <li>
-                <span><i class="fa fa-globe"></i> List of Maps </span>
-            </li>
-            <ul class="nav map-list"></ul>
-        </ul>
-    </div>
+    <ul class="nav sidebar-nav" id="side-menu">
+        <li class="sidebar-search">
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </li>
+        <li id="create-new-map">
+            <form  method="POST" action="maps">
+                <input class="form-control" type="text" placeholder="Create New Map">
+                <button type="submit" class="btn btn-primary create-map-btn">Create</button>
+            </form>
+        </li>
+        <li>
+            <span><h4><i class="fa fa-list"></i> List of Maps </h4></span>
+        </li>
+        <ul class="nav map-list"></ul>
+    </ul>
 </div>
