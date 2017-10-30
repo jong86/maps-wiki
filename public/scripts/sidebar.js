@@ -22,8 +22,7 @@ $(function() {
         }
     })
 
-    var sourceSidebar = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
-    <a class="mapListItem" data-id="{{id}}" href="">{{name}}</a></li>`;
+    var sourceSidebar = `<li><a id="list{{id}}" class="mapListItem" data-id="{{id}}" heref="">{{name}}</a><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i></li>`;
     var compiledSidebarTemplate = Handlebars.compile(sourceSidebar);
     
     function getListOfMaps() {
@@ -64,15 +63,23 @@ $(function() {
             })
         }    
     }
+    $(document).on("click", ".mapListItem", function() {
+        var id = $(this)[0].id.slice(4);
+        console.log(id);
+        $.ajax({
+            method: 'GET',
+            url: `/maps/${id}`,
+        }).done(function(map) {
+            $("#mapname").text(`You are looking at ${map.name}.`)
+        })
+    })
     
     $(document).on("click", ".liked", function() {
         var id = $(this)[0].id.slice(5);
-        console.log(id);
         $.ajax({
             method: 'POST',
             url: `/favourites/${id}`,
         }).done(function(response) {
-            console.log("here",response);
             if (response == true){
                 $(`#liked${id}`).css("color", "red");
             } else {
@@ -81,14 +88,10 @@ $(function() {
         })
     })
 
-    $('.form-control').change( function () {
-        var filter = $(this).val();
-        console.log(filter)
-        if (filter) {
-          $('.map-list').find("a:not(:contains(" + filter + "))").parent().slideUp();
-          $('.map-list').find("a:contains(" + filter + ")").parent().slideDown();
-        } else {
-          $('.map-list').find("li").slideDown();
-        }
-    })
+    if (!document.cookie){
+        $("#create-new-map").css("display", "none");
+    } else {
+        $("#create-new-map").show();
+    }
+
 })
