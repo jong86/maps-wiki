@@ -387,10 +387,8 @@ function initMap() {
           url: `/login/${$(this).data("id")}`,
         }).done(function(response){
             console.log(response);
-            $("#username").show();
-            $(".users").hide();
-            $("#logout-button").show()
             loadMap(currentMapID);
+            location.reload();
         });
       });
       
@@ -400,14 +398,23 @@ function initMap() {
           method: 'DELETE',
           url: '/login',
         }).done(function() {
-            $("#logout-button").hide();
-            $("#username").hide();
-            $(".users").show();
             // This line clears all browser cookies:
             document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
             loadMap(currentMapID);
+            location.reload();
         });
       });
+
+      // Login/logout button hiding depending on cookie on page refresh
+      if (document.cookie) {
+        $(".login-button").hide();
+        $("#logout-button").show();
+      } else {
+        $("#logout-button").hide();
+        $(".login-button").show();
+      }
+
+
 
 
 
