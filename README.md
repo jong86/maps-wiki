@@ -1,6 +1,17 @@
-# Node Skeleton
+# Triki Maps
 
-## Project Setup
+Triki Maps is a web app that allows users to collaboratively create maps which list multiple "points", for example, "Best micro-breweries in Vancouver", or "Best hiking spots". 
+
+All maps are visible whether you are authorized user or not. When a an authorized user changes a map by adding, moving, updating or deleting a point, the user's profile changes so that he is identified as a contributor to the map. Authorized users can also favourite maps. 
+
+The functional requirements, and their status can be found [here](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/Functional%20Requirements.md). 
+
+
+## Screen Shots
+![Entering a tweet.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_compose.png "Start.")
+![Compose form hidden.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_compose_hidden.png "Compose hidden")
+![Past tweets.](https://github.com/shawnkgriffin/tweeter/blob/master/docs/screen_tweet.png "Tweets.")
+
 
 1. Create your own empty repo on GitHub
 2. Clone this repository (do not fork)
@@ -16,14 +27,21 @@
 2. Update the .env file with your correct local information
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
+5. Run migrations: `npm run latest`
+6. Run the seed: `npm run seed`
 7. Run the server: `npm run local`
 8. Visit `http://localhost:8080/`
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+-body-parser
+-cookie-session
+-dotenv
+-ejs
+-express
+-jsdoc
+-knex
+-knex-logger
+-morgan
+-node-sass-middleware
+-pg
