@@ -9,7 +9,7 @@ The functional requirements, and their status can be found [here](https://github
 Documentation can be found docs/index.html once you download the project. 
 
 ## Screen Shots
-![Main Screen](https://www.dropbox.com/s/r9f6nn8b2p9xyfl/screen_shot_main.png?dl=1 "Main")
+![Main Screen](https://github.com/SpinnyFinny/maps-wiki/blob/master/docs/images/screen_shot_main.png) "Main")
 
 
 1. Create your own empty repo on GitHub
