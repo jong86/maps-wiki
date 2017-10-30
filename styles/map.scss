@@ -73,6 +73,8 @@
   border-radius: 6px;
   font-size: .8rem;
   text-align: center;
+  padding: 0px 30px;
+   
 
   ul {
     list-style-type: none;
@@ -132,4 +134,16 @@
     
 
   }
+}
+
+ul, menu, dir {
+  display: block;
+  list-style-type: disc;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+
+#new-marker-menu label{
+  padding-right: 35px;
 }
