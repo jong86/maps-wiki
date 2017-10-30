@@ -52,7 +52,7 @@ function initMap() {
     })
     
 
-    var QueryStringToHash = function QueryStringToHash(query) { // Helper function to turn serialized data into object
+    function queryStringToHash(query) { // Helper function to turn serialized data into object
       var query_string = {};
       var vars = query.split("&");
       for (var i=0;i<vars.length;i++) {
@@ -91,7 +91,7 @@ function initMap() {
         url: "/pins",
         data: data
       }).done(function(results) {
-        var newMarkerObj = QueryStringToHash(data); 
+        var newMarkerObj = queryStringToHash(data); 
         newMarkerObj.id = results[0];
         console.log("extraData.map_id", extraData.map_id);
         markMapAsChangedOnClientSide(extraData.map_id);
@@ -364,7 +364,7 @@ function initMap() {
     var zoomControl = new ZoomControl(zoomControlDiv, map);
 
     zoomControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
 
 
 
@@ -415,6 +415,11 @@ function initMap() {
         $("#create-new-map").toggle().focus();
       })
 
+
+      var sourceSidebarNewMap = `<li><i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed"></i>
+      <a class="mapListItem" data-id="{{id}}" href="">{{name}}</a></li>`;
+      var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
+
       // Create map form
       $("#create-new-map form").on("submit", function(event) {
         event.preventDefault();
@@ -424,8 +429,16 @@ function initMap() {
           method: "POST",
           url: "/maps/",
           data: { name: name }
-        }).done(function(response) {
-          console.log(response);
+        }).done(function(new_map_id) {
+          console.log(new_map_id);
+
+          var data = {
+            id  = new_map_id,
+            name = name
+          }
+          var newMapItem = compiledSidebarNewMapTemplate(data);
+
+          $(".map-list").append(newMapItem);
         })
       })
 

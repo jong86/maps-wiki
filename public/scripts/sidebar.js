@@ -34,7 +34,7 @@ $(function() {
             var data = maps;
 			$('.map-list').empty();
 			maps.forEach(function(data){
-                var result= compiledSidebarTemplate(data);
+                var result = compiledSidebarTemplate(data);
                 $('.map-list').append(result);
                 getProfile();
 			})
