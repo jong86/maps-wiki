@@ -10,6 +10,12 @@ html, body {
   padding: 0;
 }
 
+nav {
+  background-color: rgba(0, 0, 0, 0) !important;
+  position: fixed;
+  z-index: 50;
+  width: 100%;
+}
 .nav>li {
   position: relative;
   display: block;
@@ -20,12 +26,6 @@ html, body {
 img {
   width:5em;
   
-}
-#wrapper {
-    width: 100%;
-    margin:0;
-    opacity: 0.9;
-    position: relative
 }
 
 
@@ -38,11 +38,6 @@ img {
     }
 }
 
-
-.navbar-default {
-  opacity: 0.9;
-  filter: alpha(opacity=50)
-}
 
 .navbar-top-links {
   margin-right: 0;
@@ -79,13 +74,20 @@ img {
   span {
     padding:20px;
     font-size: large;
-    color:$button-color 
+    color:$button-color
   }
 }
 //sidebar
 
 
 .sidebar {
+  opacity: 0.9;
+  filter: alpha(opacity=50);
+  position: fixed;
+  top:50px;
+  overflow: scroll;
+  
+
   .sidebar-nav.navbar-collapse {
       padding-left: 0;
       padding-right: 0;
@@ -110,10 +112,14 @@ img {
   
 }
 
+div .list {
+  height:200px;
+  overflow: scroll
+}
 @media(min-width:768px) {
   .sidebar {
       z-index: 1;
-      position: absolute;
+      position: fixed;
       width: 250px;
       margin-top: 51px;
   }
