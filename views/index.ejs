@@ -12,30 +12,29 @@
     <link rel="stylesheet" href="/styles/map.css" type="text/css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/scripts/sidebar.js"></script>
     <script type="text/javascript" src="/scripts/header.js"></script>
     <script type="text/javascript" src="/scripts/handlebars-v4.0.11.js"></script>
     <script type="text/javascript" src="/scripts/moment.js"></script>
-    
-    
+
+
   </head>
-  
+
   <body>
     <%- include('partials/_header') %>
-    
+
     <%- include('partials/_sidebar') %>
-    
+
     <%- include('partials/_mapmenus') %>
-    
+
     <%- include('partials/_handlebars') %>
-    
+
     <div id="map"></div>
-    
+
     <script type="text/javascript" src="/scripts/app.js"></script>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2p2O4Hpy7mSTQlMuewAzO6rub04uLsvw&callback=initMap" async defer></script>    
-    
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2p2O4Hpy7mSTQlMuewAzO6rub04uLsvw&callback=initMap" async defer></script>
+
   </body>
   </html>
-  
