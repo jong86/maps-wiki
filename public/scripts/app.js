@@ -270,6 +270,15 @@ function initMap() {
       });
       marker.addListener("click", function() {
         infoWindow.open(map, marker);
+
+        if (!document.cookie) {
+          $(".edit").hide();
+          $(".delete").hide();
+        } else {
+          $(".edit").show();
+          $(".delete").show();
+        }
+
       });
       currentMarkers[data.id] = marker;
     }
