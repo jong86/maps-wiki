@@ -1,6 +1,6 @@
-currentMapID = 1;
-
 function initMap () {
+  let currentMapID = 1;
+
   $(function () {
     var infoWindowTemplate = $('#infowindow-template').html();
     var compiledInfoWindowTemplate = Handlebars.compile(infoWindowTemplate);
