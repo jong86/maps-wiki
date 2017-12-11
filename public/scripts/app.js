@@ -1,126 +1,30 @@
-function initMap () {
-  let currentMapID = 1;
+function initMap() {
 
   $(function () {
-    var infoWindowTemplate = $('#infowindow-template').html();
-    var compiledInfoWindowTemplate = Handlebars.compile(infoWindowTemplate);
+
+    //
+    // Setup
+    //
 
     var mapOptions = {
       zoom: 15,
       center: new google.maps.LatLng(49.2827, -123.1207),
       disableDefaultUI: true
     };
-
     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    var marker = new google.maps.Marker({
-      map: map
-    });
 
-    var currentMarkers = {}; // Possibly to use for edit history
+    var currentMapID = 1;
+    var currentMarkers = {}; // Stores all current markers displayed on map:
+    var mapPos; // For storing google map latitude and longitude in mouse clicks
+    var markerType; // For storing selected marker types when clicked
 
-    var mapPos; // For storing google map latitude and longitude
-    var markerType;
-    var crosshair = document.getElementById('crosshair');
-    var cm = document.getElementById('context-menu');
-    var newMarkerMenu = document.getElementById('new-marker-menu');
-    map.addListener('rightclick', function (event) { // Right-click context menu to create new marker
-      if (!document.cookie) return;
 
-      mapPos = event.latLng;
-      $(cm).css('left', event.pixel.x + 'px');
-      $(cm).css('top', event.pixel.y + $('#map').offset().top + 'px');
-      $(cm).css('display', 'inline');
-      $(crosshair).css('left', event.pixel.x - ($(crosshair).width() / 2) + 'px');
-      $(crosshair).css('top', event.pixel.y + $('#map').offset().top - ($(crosshair).height() / 2) + 'px');
-      $(crosshair).css('display', 'inline');
-    });
 
-    $('body').on('click', function () { // Hides menus when anywhere on body is clicked
-      $(cm).css('display', 'none');
-      $(crosshair).css('display', 'none');
-    });
+    //
+    // Templates
+    //
 
-    $('.marker-select-button').on('click', function (event) { // When marker type selected
-      $(newMarkerMenu).css('left', $(cm).offset().left - ($(newMarkerMenu).width() / 2));
-      $(newMarkerMenu).css('top', $(cm).offset().top - ($(newMarkerMenu).height()));
-      $(newMarkerMenu).css('display', 'inline');
-      $(crosshair).css('display', 'inline');
-      $('#new-marker-form #image').val(randomBillMurray());
-      markerType = 'icons/' + $(this).data().markertype + '.png';
-    });
-
-    function queryStringToHash (query) { // Helper function to turn serialized data into object
-      var query_string = {};
-      var vars = query.split('&');
-      for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        pair[0] = decodeURIComponent(pair[0]);
-        pair[1] = decodeURIComponent(pair[1]);
-        // If first entry with this name
-        if (typeof query_string[pair[0]] === 'undefined') {
-          query_string[pair[0]] = pair[1];
-          // If second entry with this name
-        } else if (typeof query_string[pair[0]] === 'string') {
-          var arr = [ query_string[pair[0]], pair[1] ];
-          query_string[pair[0]] = arr;
-          // If third or later entry with this name
-        } else {
-          query_string[pair[0]].push(pair[1]);
-        }
-      }
-      return query_string;
-    };
-
-    $('#new-marker-form').on('submit', function (event) { // Submits new marker form
-      event.preventDefault();
-      $(newMarkerMenu).css('display', 'none');
-      var extraData = {
-        latitude: mapPos.lat,
-        longitude: mapPos.lng,
-        type: markerType,
-        map_id: currentMapID
-      };
-      var data = $(this).serialize() + '&' + $.param(extraData);
-      console.log('I send: ', data);
-      $('#new-marker-menu form').trigger('reset');
-      $.ajax({
-        method: 'POST',
-        url: '/pins',
-        data: data
-      }).done(function (results) {
-        var newMarkerObj = queryStringToHash(data);
-        newMarkerObj.id = results[0];
-        console.log('extraData.map_id', extraData.map_id);
-        markMapAsChangedOnClientSide(extraData.map_id);
-        createMarker(newMarkerObj);
-        $(crosshair).css('display', 'none');
-      });
-    });
-
-    $('#new-marker-menu #cancel').on('click', function (event) { // Close new marker form
-      event.preventDefault();
-      $(newMarkerMenu).css('display', 'none');
-      $('#new-marker-menu form').trigger('reset');
-    });
-
-    function randomBillMurray () { // Helper function to generate random images for now
-      var rand = Math.floor(Math.random() * 100 + 200);
-      var url = `http://www.fillmurray.com/${rand}/300`;
-      return url;
-    }
-
-    // <li>user_id: {{user_id}}</li>
-    // <li>type: {{type}}</li>
-    // Handlebars template:
-    // <li>map_id: {{map_id}}</li>
-    // <li>version: {{version}}</li>
-    // <li>pin_id: {{id}}</li>
-    // <li>Latitude: {{latitude}}</li>
-    // <li>Longitude: {{longitude}}</li>
-
-    var sourceInfoWindow = `
-    
-    
+    var markerInfoWindow = `
     <div class="info-window" data-pin_id="{{id}}">
       <div class="info-window-display">
         <ul>
@@ -162,79 +66,25 @@ function initMap () {
     </div>
     `;
 
-    $(document).on('click', '.info-window .edit', function (event) {
-      event.preventDefault();
-      console.log($(this).closest('.info-window-edit'));
-      $(this).parent().parent().parent().css('display', 'none');
-      $(this).parent().parent().parent().next().css('display', 'inline');
-    });
+    var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i>` : '';
+    var sourceSidebarNewMap = `<li class="map-li noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
 
-    $(document).on('click', '.info-window .cancel', function (event) {
-      event.preventDefault();
-      $(this).parent().parent().css('display', 'none');
-      $(this).parent().parent().prev().css('display', 'inline');
-    });
 
-    $(document).on('click', '.info-window .save', function (event) { // For updating pin values
-      event.preventDefault();
-      var pin_id = $(this).parent().parent().parent().data('pin_id');
-      console.log(currentMarkers[pin_id]);
-      var extraData = {
-        latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
-        longitude: currentMarkers[pin_id].position.lng, // need to update
-        type_id: currentMarkers[pin_id].type, // need to update
-        map_id: currentMapID,
-        pin_id: pin_id
-      };
-      var data = $(this).parent().serialize() + '&' + $.param(extraData);
-      console.log('I send: ', data);
-      $.ajax({
-        method: 'PUT',
-        url: `pins/${pin_id}`,
-        data: data
-      }).done(function (results) {
-        results.id = pin_id;
-        results.type = currentMarkers[pin_id].icon.url;
 
-        markMapAsChangedOnClientSide(data.map_id);
-        removePinFromClientMap(pin_id);
-        createMarker(results);
+    //
+    // Map Functions
+    //
 
-        $(this).parent().parent().css('display', 'none');
-        $(this).parent().parent().prev().css('display', 'inline');
-      });
-    });
-
-    function removePinFromClientMap (pin_id) {
-      currentMarkers[pin_id].setMap(null);
-      delete currentMarkers[pin_id];
-    }
-
-    $(document).on('click', '.info-window .delete', function (event) {
-      event.preventDefault();
-      var pin_id = $(this).parent().parent().parent().parent().data('pin_id');
-      var data = {
-        map_id: currentMapID
-      };
-      $.ajax({
-        method: 'DELETE',
-        url: `pins/${pin_id}`,
-        data: data
-      }).done(function (results) {
-        markMapAsChangedOnClientSide(data.map_id);
-        removePinFromClientMap(pin_id);
-      });
-    });
-
+    // Creating a marker
     function createMarker (data) { // Gets called after submitting new marker form...
-      var compiledInfoWindowTemplate = Handlebars.compile(sourceInfoWindow);
-      var contentString = compiledInfoWindowTemplate(data);
+      var compiledMarkerWindowTemplate = Handlebars.compile(markerInfoWindow);
+      var contentString = compiledMarkerWindowTemplate(data);
+      // Information pop-up window:
       var infoWindow = new google.maps.InfoWindow({
         content: contentString
       });
       var iconPath = 'icons/';
       var types = ['food.png', 'cafe.png', 'bar.png', 'view.png', 'misc.png'];
-
       var marker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(Number(data.latitude), Number(data.longitude)), // GPS coords
@@ -249,17 +99,14 @@ function initMap () {
         },
         draggable: !!document.cookie
       });
-
       marker.addListener('dragend', function (event) {
         data.latitude = event.latLng.lat;
         data.longitude = event.latLng.lng;
-
         $.ajax({
           method: 'PUT',
           url: `pins/${data.id}`,
           data: data
         }).done(function (results) {
-          console.log(data);
           markMapAsChangedOnClientSide(data.map_id);
         });
       });
@@ -276,48 +123,7 @@ function initMap () {
       currentMarkers[data.id] = marker;
     }
 
-    function markMapAsChangedOnClientSide (map_id) {
-      console.log('marking as changed for map:', map_id);
-      $(`#changed${map_id}`).css('color', 'orange');
-    }
-
-    // var currentMapID = $(".map-list").children();
-    // console.log("Current map id?", currentMapID);
-
-    function retrievePins (currentMapID) { // Gets the pins for the current map
-      $.ajax({
-        method: 'GET',
-        url: `maps/${currentMapID}/pins`
-      }).done(function (results) {
-        results.forEach(function (item) {
-          createMarker(item);
-        });
-      }).catch(function (error) {
-        console.log('Error loading pins.');
-      });
-    }
-
-    // $(document).on("load", "sidebar ul.map-list", function(){ 
-    //   var mapName = $(this).last();
-    //   console.log(mapName);
-    //   $("#mapname").text(`You are looking at map ${mapName}.`); // sets initial map name displayed based
-    // })
-
-    //
-    // Side bar map list listener for each map item:
-    $(document).on('click', '.map-list-item', function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      var map_id = $(this).data('id');
-      console.log('map id you clicked:', map_id);
-      loadMap(map_id);
-      currentMapID = map_id;
-      mapName = $(this).text();
-      $('#mapname').text(`You are looking at map ${mapName}.`);
-    });
-
     function loadMap (mapID) {
-      console.log('Loading map with id:', mapID);
       for (pin in currentMarkers) {
         currentMarkers[pin].setMap(null);
       }
@@ -325,10 +131,47 @@ function initMap () {
       retrievePins(mapID);
     }
 
-    loadMap(currentMapID);
+    // Client-side "map edited" status
+    function markMapAsChangedOnClientSide (map_id) {
+      $(`#changed${map_id}`).css('color', 'orange');
+    }
+
+    // Removing pin on client-side (request also sent to server)
+    function removePinFromClientMap (pin_id) {
+      currentMarkers[pin_id].setMap(null);
+      delete currentMarkers[pin_id];
+    }
+
+    // Get the pins for the current map
+    function retrievePins (currentMapID) {
+      $.ajax({
+        method: 'GET',
+        url: `maps/${currentMapID}/pins`
+      }).done(function (results) {
+        results.forEach(function (item) {
+          createMarker(item);
+        });
+      })
+    }
+
+    // Show/hide login/logout buttons depending on cookie
+    function refreshGuiForCookie () {
+      if (document.cookie) {
+        $('.login-button').hide();
+        $('#logout-button').show();
+      } else {
+        $('#logout-button').hide();
+        $('.login-button').show();
+      }
+    }
+
+
 
     //
-    // Custom map controls:
+    // Custom Map Controls
+    //
+
+    // For custom zoom controls
     function ZoomControl (controlDiv, map) {
       // Creating divs & styles for custom zoom control
       controlDiv.className = 'control-div';
@@ -360,37 +203,218 @@ function initMap () {
       });
     }
 
-    // Create the DIV to hold the control and call the CenterControl()
-    // constructor passing in this DIV.
     var zoomControlDiv = document.createElement('div');
     var zoomControl = new ZoomControl(zoomControlDiv, map);
 
     zoomControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
 
-    //
-    // User login panel functions:
 
-    // Login 
+
+    //
+    // Other Helper Functions
+    //
+
+    // Helper function to generate random images for demo purposes
+    function randomBillMurray () {
+      var rand = Math.floor(Math.random() * 100 + 200);
+      var url = `http://www.fillmurray.com/${rand}/300`;
+      return url;
+    }
+
+    // To turn serialized data into object
+    function queryStringToObject (query) {
+      var query_string = {};
+      var vars = query.split('&');
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        pair[0] = decodeURIComponent(pair[0]);
+        pair[1] = decodeURIComponent(pair[1]);
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === 'undefined') {
+          query_string[pair[0]] = pair[1];
+          // If second entry with this name
+        } else if (typeof query_string[pair[0]] === 'string') {
+          var arr = [ query_string[pair[0]], pair[1] ];
+          query_string[pair[0]] = arr;
+          // If third or later entry with this name
+        } else {
+          query_string[pair[0]].push(pair[1]);
+        }
+      }
+      return query_string;
+    };
+
+
+
+    //
+    // Event Listeners
+    //
+
+    var crosshair = document.getElementById('crosshair');
+    var cm = document.getElementById('context-menu');
+    var newMarkerMenu = document.getElementById('new-marker-menu');
+
+    // Context menu that shows when user right-clicks
+    map.addListener('rightclick', function (event) {
+      if (!document.cookie) return;
+      mapPos = event.latLng;
+      $(cm).css('left', event.pixel.x + 'px');
+      $(cm).css('top', event.pixel.y + $('#map').offset().top + 'px');
+      $(cm).css('display', 'inline');
+      $(crosshair).css('left', event.pixel.x - ($(crosshair).width() / 2) + 'px');
+      $(crosshair).css('top', event.pixel.y + $('#map').offset().top - ($(crosshair).height() / 2) + 'px');
+      $(crosshair).css('display', 'inline');
+    });
+
+    // Hides menus when anywhere on body is clicked
+    $('body').on('click', function () {
+      $(cm).css('display', 'none');
+      $(crosshair).css('display', 'none');
+    });
+
+    // Handle selection of new marker type
+    $('.marker-select-button').on('click', function (event) {
+      $(newMarkerMenu).css('left', $(cm).offset().left - ($(newMarkerMenu).width() / 2));
+      $(newMarkerMenu).css('top', $(cm).offset().top - ($(newMarkerMenu).height()));
+      $(newMarkerMenu).css('display', 'inline');
+      $(crosshair).css('display', 'inline');
+      $('#new-marker-form #image').val(randomBillMurray());
+      markerType = 'icons/' + $(this).data().markertype + '.png';
+    });
+
+    // Submit new marker
+    $('#new-marker-form').on('submit', function (event) {
+      event.preventDefault();
+      $(newMarkerMenu).css('display', 'none');
+      var extraData = {
+        latitude: mapPos.lat,
+        longitude: mapPos.lng,
+        type: markerType,
+        map_id: currentMapID
+      };
+      var data = $(this).serialize() + '&' + $.param(extraData);
+      $('#new-marker-menu form').trigger('reset');
+      $.ajax({
+        method: 'POST',
+        url: '/pins',
+        data: data
+      }).done(function (results) {
+        var newMarkerObj = queryStringToObject(data);
+        newMarkerObj.id = results[0];
+        markMapAsChangedOnClientSide(extraData.map_id);
+        createMarker(newMarkerObj);
+        $(crosshair).css('display', 'none');
+      });
+    });
+
+    // Cancel creation of new marker
+    $('#new-marker-menu #cancel').on('click', function (event) { // Close new marker form
+      event.preventDefault();
+      $(newMarkerMenu).css('display', 'none');
+      $('#new-marker-menu form').trigger('reset');
+    });
+
+    // To show marker edit form
+    $(document).on('click', '.info-window .edit', function (event) {
+      event.preventDefault();
+      $(this).parent().parent().parent().css('display', 'none');
+      $(this).parent().parent().parent().next().css('display', 'inline');
+    });
+
+    // Cancelling marker edit
+    $(document).on('click', '.info-window .cancel', function (event) {
+      event.preventDefault();
+      $(this).parent().parent().css('display', 'none');
+      $(this).parent().parent().prev().css('display', 'inline');
+    });
+
+    // Saving marker edit
+    $(document).on('click', '.info-window .save', function (event) { // For updating pin values
+      event.preventDefault();
+      var pin_id = $(this).parent().parent().parent().data('pin_id');
+      var extraData = {
+        latitude: currentMarkers[pin_id].position.lat, // need to update for 'this'
+        longitude: currentMarkers[pin_id].position.lng, // need to update
+        type_id: currentMarkers[pin_id].type, // need to update
+        map_id: currentMapID,
+        pin_id: pin_id
+      };
+      var data = $(this).parent().serialize() + '&' + $.param(extraData);
+      $.ajax({
+        method: 'PUT',
+        url: `pins/${pin_id}`,
+        data: data
+      }).done(function (results) {
+        results.id = pin_id;
+        results.type = currentMarkers[pin_id].icon.url;
+        markMapAsChangedOnClientSide(data.map_id);
+        removePinFromClientMap(pin_id);
+        createMarker(results);
+        $(this).parent().parent().css('display', 'none');
+        $(this).parent().parent().prev().css('display', 'inline');
+      });
+    });
+
+    // Deleting a marker
+    $(document).on('click', '.info-window .delete', function (event) {
+      event.preventDefault();
+      var pin_id = $(this).parent().parent().parent().parent().data('pin_id');
+      var data = {
+        map_id: currentMapID
+      };
+      $.ajax({
+        method: 'DELETE',
+        url: `pins/${pin_id}`,
+        data: data
+      }).done(function (results) {
+        markMapAsChangedOnClientSide(data.map_id);
+        removePinFromClientMap(pin_id);
+      });
+    });
+
+    // Changing map
+    $(document).on('click', '.map-list-item', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      var map_id = $(this).data('id');
+      loadMap(map_id);
+      currentMapID = map_id;
+      mapName = $(this).text();
+      $('#mapname').text(`You are looking at map ${mapName}.`);
+    });
+
+    // Creating a map
+    $('#create-new-map form').on('submit', function (event) {
+      event.preventDefault();
+      var name = $(this).children()[0].value;
+      $.ajax({
+        method: 'POST',
+        url: '/maps/',
+        data: { name: name }
+      }).done(function (new_map_id) {
+        var data = {
+          id: new_map_id,
+          name: name
+        };
+        var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
+        var newMapItem = compiledSidebarNewMapTemplate(data);
+        document.querySelector('ul.map-list').innerHTML = newMapItem + document.querySelector('ul.map-list').innerHTML;
+      });
+    });
+
+    // Logging in
     $('.login-button').on('click', function (event) {
-      // var emailLength = $(".email-field").val().length;
-      // var passwordLength = $(".password-field").val().length;
-      // if ((emailLength || passwordLength) <= 0) {
-      // alert("You can't leave it blank!")
-      // return;
-      // }
-      // var form = this;
       $.ajax({
         method: 'POST',
         url: `/login/${$(this).data('id')}`
       }).done(function (response) {
-        console.log(response);
         loadMap(currentMapID);
         location.reload();
       });
     });
 
-    // Logout
+    // Logging out
     $('#logout-button').on('click', function (event) {
       $.ajax({
         method: 'DELETE',
@@ -403,46 +427,14 @@ function initMap () {
       });
     });
 
-    // Hiding/showing of stuff depending on cookie after page refresh
-    function refreshGuiForCookie () {
-      if (document.cookie) {
-        $('.login-button').hide();
 
-        $('#logout-button').show();
-      } else {
-        $('#logout-button').hide();
-
-        $('.login-button').show();
-      }
-    }
-    refreshGuiForCookie();
 
     //
-    // Creating new maps:
-    var iconsHTML = document.cookie ? `<i id="liked{{id}}" class="fa fa-heart liked"></i><i id="changed{{id}}" class="fa fa-pencil changed" style="color: orange;"></i>` : '';
-    var sourceSidebarNewMap = `<li class="map-li noselect"><span id="list{{id}}" class="map-list-item" data-id="{{id}}">{{name}}</span>` + iconsHTML + `</li>`;
-    var compiledSidebarNewMapTemplate = Handlebars.compile(sourceSidebarNewMap);
+    // Initialization
+    //
 
-    // Create map form
-    $('#create-new-map form').on('submit', function (event) {
-      event.preventDefault();
-      var name = $(this).children()[0].value;
-      console.log($(this).children()[0].value);
-      $.ajax({
-        method: 'POST',
-        url: '/maps/',
-        data: { name: name }
-      }).done(function (new_map_id) {
-        console.log(new_map_id);
+    loadMap(currentMapID);
+    refreshGuiForCookie();
 
-        var data = {
-          id: new_map_id,
-          name: name
-        };
-        var newMapItem = compiledSidebarNewMapTemplate(data);
-
-        document.querySelector('ul.map-list').innerHTML = newMapItem + document.querySelector('ul.map-list').innerHTML;
-      });
-    });
-  });
+  })
 }
