@@ -40,27 +40,32 @@ function initMap() {
         </ul>
       </div>
       <div class="info-window-edit">
-        <form class="edit-marker-form">
+        <form class="new-or-edit">
           <ul>
-            <li>
-              <label for="title" class="noselect">Title:</label>
-              <input class="input-field" class="title" type="text" name="title" /><br />
+            <li class="heading">
+              <h2>Edit marker</h2>
             </li>
             <li>
-              <label for="description" class="noselect">Description:</label>
-              <input class="input-field" class="description" type="text" name="description" /><br />
+              <label for="title" class="noselect col-sm-4">Title:</label>
+              <input class="field" class="title" type="text" name="title" /><br />
             </li>
             <li>
-              <label for="image" class="noselect">Image:</label>
-              <input class="input-field" class="image" type="text" name="image" /><br />
+              <label for="description" class="noselect col-sm-4">Description:</label>
+              <input class="field" class="description" type="text" name="description" /><br />
             </li>
             <li>
-              <label for="url" class="noselect">URL:</label>
-              <input class="input-field" class="url" type="text" name="url" /><br />
+              <label for="image" class="noselect col-sm-4">Image:</label>
+              <input class="field" class="image" type="text" name="image" /><br />
+            </li>
+            <li>
+              <label for="url" class="noselect col-sm-4">URL:</label>
+              <input class="field" class="url" type="text" name="url" /><br />
+            </li>
+            <li>
+              <button class="cancel btn btn-primary">cancel</button>
+              <input class="save btn btn-primary" type="submit" value="save">
             </li>
           </ul>
-          <input class="save btn btn-primary" type="submit" value="save">
-          <button class="cancel btn btn-primary">cancel</button>
         </form>
       </div>
     </div>
