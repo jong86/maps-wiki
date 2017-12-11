@@ -1,32 +1,39 @@
 <div id="new-marker-menu" class="noselect">
   <form id="new-marker-form" class="form-group row">
       <ul>
-        <li>
+        <li class="heading">
           <h2>Create new marker</h2>
         </li>
         <li>
-          <label for="title" class="noselect col-sm-2 col-for-label">Title:</label>
-          <input class="input-field" id="title" type="text" name="title" /><br />
+          <label for="title" class="noselect col-sm-4">Title:</label>
+          <input class="field col-sm-8" id="title" type="text" name="title" />
         </li>
         <li>
-          <label for="description" class="noselect col-sm-2 col-for-label">Description:</label>
-          <input class="input-field" id="description" type="text" name="description" /><br />
+          <label for="description" class="noselect col-sm-4">Description:</label>
+          <input class="field col-sm-8" id="description" type="text" name="description" />
         </li>
         <li>
-          <label for="image" class="noselect col-sm-2 col-for-label">Image:</label>
-          <input class="input-field" id="image" type="text" name="image" /><br />
+          <label for="image" class="noselect col-sm-4">Image:</label>
+          <input class="field col-sm-8" id="image" type="text" name="image" />
         </li>
         <li>
-          <label for="url" class="noselect col-sm-2 col-for-label">URL:</label>
-          <input class="input-field" id="url" type="text" name="url" /><br />
+          <label for="url" class="noselect col-sm-4">URL:</label>
+          <input class="field col-sm-8" id="url" type="text" name="url" />
+        </li>
+        <li class="save-cancel">
+          <button class="btn btn-primary" id="cancel">cancel</button>
+          <input class="btn btn-primary" type="submit" id="save" value="save">
         </li>
       </ul>
-    <input type="submit" id="save" value="save">
-    <button id="cancel">cancel</button>
   </form>
 </div>
 
+
+
 <img id="crosshair" src="icons/crosshair.png" />
+
+
+
 <div id="context-menu" class="noselect">
   <ul>
     <li id="new-marker">New...</li>

@@ -34,8 +34,8 @@ function initMap() {
           <li>URL: <a href="{{url}}">{{url}}</a></li>
           <li>Created at: {{created_at}}</li>
           <li>
-            <button class="edit">edit</button>
-            <button class="delete">delete</button>
+            <button class="edit btn btn-primary">edit</button>
+            <button class="delete btn btn-primary">delete</button>
           </li>
         </ul>
       </div>
@@ -59,8 +59,8 @@ function initMap() {
               <input class="input-field" class="url" type="text" name="url" /><br />
             </li>
           </ul>
-          <input class="save" type="submit" value="save">
-          <button class="cancel">cancel</button>
+          <input class="save btn btn-primary" type="submit" value="save">
+          <button class="cancel btn btn-primary">cancel</button>
         </form>
       </div>
     </div>
